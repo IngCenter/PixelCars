@@ -1,20 +1,26 @@
-
 #include "TXLib.h"
-void drawButton(int x , int y, const char* text)
+
+struct Knopka
+{
+     int x;
+     int y;
+     const char* text;
+};
+
+void drawButton(Knopka knop)
 {
     txSetFillColor(TX_LIGHTBLUE);
-    txRectangle(x + 10,y + 10,x + 100,y + 50);
-    txDrawText (x + 10,y + 10,x + 100,y + 50, text);
-
+    txRectangle(knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50);
+    txDrawText (knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50, knop.text);
 }
 
-bool Click (int x, int y)
+bool Click (Knopka knop)
 {
  if(txMouseButtons() == 1 &&
-    txMouseX() > x + 10 &&
-    txMouseX() < x + 100 &&
-    txMouseY() > y + 10 &&
-    txMouseY() < y + 50)
+    txMouseX() > knop.x + 10 &&
+    txMouseX() < knop.x + 100 &&
+    txMouseY() > knop.y + 10 &&
+    txMouseY() < knop.y + 50)
  {
   return true;
  }
@@ -44,7 +50,19 @@ int main()
 {
     txCreateWindow (1200, 600);
 
-HDC image = txLoadImage ("apple.bmp");
+    HDC image = txLoadImage ("apple.bmp");
+
+    Knopka knop[10];
+    knop[0] = {0, 0,   "ÃŠÃ³Ã§Ã®Ã¢"};
+    knop[1] = {100, 10, "ÃŠÃ®Ã«Ã¥Ã±Ã "};
+    knop[2] = {200, 0, "Ã‘Ã¯Ã®Ã©Ã«Ã¥Ã°"};
+    knop[3] = {300,10, "ÃŠÃ°Ã»Ã¸Ã "};
+    knop[4] = {400,0,  "Ã‚Ã»ÃµÃ«Ã®Ã¯"};
+    knop[5] = {500,10, "Ã’Ã Ã­Ã¨Ã°Ã®Ã¢ÃªÃ "};
+    knop[6] = {600,0,  "Ã„Ã¢Ã¨Ã£Ã Ã²Ã¥Ã«Ã¼"};
+    knop[7] = {700,10, "ÃŠÃ°Ã»Ã«Ã¼Ã¿ Ã."};
+    knop[8] = {800,0, "ÃŠÃ°Ã»Ã«Ã¼Ã¿ Ã‡."};
+    knop[9] = {900,10, "ÃÃ®Ã°Ã®Ã£Ã¨"};
 
         MapObject pic[8];
         pic[0] = {1030,20,70,70,image,false};
@@ -58,85 +76,19 @@ HDC image = txLoadImage ("apple.bmp");
 
     while (true)
     {
-
         txBegin();
-
         txSetFillColor(TX_WHITE);
-
         txClear();
-
         txSetColor(TX_PINK);
 
-        drawButton(0, 0,   "Êóçîâ");
-
-        if (Click(0, 0))
+        for (int nomer = 0; nomer < 10; nomer = nomer + 1)
         {
-            txTextOut(400, 10, "òû ëîõ");
+            drawButton(knop[nomer]);
+            if (Click(knop[nomer]))
+            {
+                txTextOut(knop[nomer].x, knop[nomer].y + 100, "Ã²Ã» Ã«Ã®Ãµ");
+            }
         }
-
-        drawButton(100,10, "Êîëåñà");
-
-        if (Click(100, 10))
-        {
-            txTextOut(500, 10, "òû ëîõ");
-        }
-
-        drawButton(200,0,  "Ñïîéëåð");
-
-        if (Click(200, 0))
-        {
-            txTextOut(600, 10, "òû ëîõ");
-        }
-
-        drawButton(300,10, "Êðûøà");
-
-        if (Click(300, 10))
-        {
-            txTextOut(700, 10, "òû ëîõ");
-        }
-
-        drawButton(400,0,  "Âûõëîï");
-
-        if (Click(400, 0))
-        {
-            txTextOut(800, 10, "òû ëîõ");
-        }
-
-        drawButton(500,10, "Òàíèðîâêà");
-
-        if (Click(500, 10))
-        {
-            txTextOut(900, 10, "òû ëîõ");
-        }
-
-        drawButton(600,0,  "Äâèãàòåëü");
-
-        if (Click(600, 0))
-        {
-            txTextOut(1000, 10, "òû ëîõ");
-        }
-
-        drawButton(700,10, "Êðûëüÿ Ï.");
-
-        if (Click(700, 10))
-        {
-            txTextOut(1000, 10, "òû ëîõ");
-        }
-
-        drawButton(800,0,  "Êðûëüÿ Ç.");
-
-        if (Click(800, 0))
-        {
-            txTextOut(1000, 10, "òû ëîõ");
-        }
-
-        drawButton(900,10, "Ïîðîãè");
-
-        if (Click(900, 10))
-        {
-            txTextOut(1000, 10, "òû ëîõ");
-        }
-
 
         txSetFillColor(TX_BLUE);
         txSetColor(TX_PINK);
@@ -162,4 +114,3 @@ HDC image = txLoadImage ("apple.bmp");
     }
     return 0;
 }
-
