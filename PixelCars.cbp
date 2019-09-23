@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="moyyyyyyyyyyyy" />
+		<Option title="PixelCars" />
 		<Option pch_mode="2" />
 		<Option compiler="gnu_gcc_compiler__strict__fast_single_files_only" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/moyyyyyyyyyyyy" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/PixelCars" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="0" />
 				<Option compiler="gnu_gcc_compiler__strict__fast_single_files_only" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/moyyyyyyyyyyyy" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/PixelCars" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="gnu_gcc_compiler__strict__fast_single_files_only" />

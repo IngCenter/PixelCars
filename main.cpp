@@ -14,7 +14,7 @@ void drawButton(Knopka knop)
     txDrawText (knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50, knop.text);
 }
 
-bool Click (Knopka knop)
+bool click (Knopka knop)
 {
  if(txMouseButtons() == 1 &&
     txMouseX() > knop.x + 10 &&
@@ -50,29 +50,29 @@ int main()
 {
     txCreateWindow (1200, 600);
 
-    HDC image = txLoadImage ("apple.bmp");
+    HDC image = txLoadImage ("Pics\\apple.bmp");
 
     Knopka knop[10];
-    knop[0] = {0, 0,   "ГЉГіГ§Г®Гў"};
-    knop[1] = {100, 10, "ГЉГ®Г«ГҐГ±Г "};
-    knop[2] = {200, 0, "Г‘ГЇГ®Г©Г«ГҐГ°"};
-    knop[3] = {300,10, "ГЉГ°Г»ГёГ "};
-    knop[4] = {400,0,  "Г‚Г»ГµГ«Г®ГЇ"};
-    knop[5] = {500,10, "Г’Г Г­ГЁГ°Г®ГўГЄГ "};
-    knop[6] = {600,0,  "Г„ГўГЁГЈГ ГІГҐГ«Гј"};
-    knop[7] = {700,10, "ГЉГ°Г»Г«ГјГї ГЏ."};
-    knop[8] = {800,0, "ГЉГ°Г»Г«ГјГї Г‡."};
-    knop[9] = {900,10, "ГЏГ®Г°Г®ГЈГЁ"};
+    knop[0] = {0, 0,   "Кузов"};
+    knop[1] = {100, 10, "Колеса"};
+    knop[2] = {200, 0, "Спойлер"};
+    knop[3] = {300,10, "Крыша"};
+    knop[4] = {400,0,  "Выхлоп"};
+    knop[5] = {500,10, "Танировка"};
+    knop[6] = {600,0,  "Двигатель"};
+    knop[7] = {700,10, "Крылья П."};
+    knop[8] = {800,0, "Крылья З."};
+    knop[9] = {900,10, "Пороги"};
 
-        MapObject pic[8];
-        pic[0] = {1030,20,70,70,image,false};
-        pic[1] = {1110,20,70,70,image,false};
-        pic[2] = {1030,100,70,70,image,false};
-        pic[3] = {1110,100,70,70,image,false};
-        pic[4] = {1030,180,70,70,image,false};
-        pic[5] = {1110,180,70,70,image,false};
-        pic[6] = {1030,260,70,70,image,false};
-        pic[7] = {1110,260,70,70,image,false};
+    MapObject pic[8];
+    pic[0] = {1030,20,70,70,image,false};
+    pic[1] = {1110,20,70,70,image,true};
+    pic[2] = {1030,100,70,70,image,false};
+    pic[3] = {1110,100,70,70,image,false};
+    pic[4] = {1030,180,70,70,image,false};
+    pic[5] = {1110,180,70,70,image,false};
+    pic[6] = {1030,260,70,70,image,false};
+    pic[7] = {1110,260,70,70,image,false};
 
     while (true)
     {
@@ -84,9 +84,9 @@ int main()
         for (int nomer = 0; nomer < 10; nomer = nomer + 1)
         {
             drawButton(knop[nomer]);
-            if (Click(knop[nomer]))
+            if (click(knop[nomer]))
             {
-                txTextOut(knop[nomer].x, knop[nomer].y + 100, "ГІГ» Г«Г®Гµ");
+                txTextOut(knop[nomer].x, knop[nomer].y + 100, "Ты лох");
             }
         }
 
@@ -98,9 +98,13 @@ int main()
         txSetColor(TX_RED);
         txRectangle(1020,10,1190,590);
 
-        if (GetAsyncKeyState('0'))
+        if (GetAsyncKeyState('A'))
         {
             pic[0].visible = !pic[0].visible;
+        }
+        if (GetAsyncKeyState('S'))
+        {
+            pic[1].visible = !pic[1].visible;
         }
 
         for (int nomer = 0; nomer < 8; nomer = nomer + 1)
@@ -112,5 +116,6 @@ int main()
         txEnd();
 
     }
+
     return 0;
 }
