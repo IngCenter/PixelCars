@@ -22,11 +22,39 @@ bool Click (int x, int y)
   return false;
 }
 
+struct MapObject
+{
+    int x;
+    int y;
+    int shirina;
+    int visota;
+    HDC image;
+    bool visible;
+};
+
+void drawPicture(MapObject pic)
+{
+    if (pic.visible)
+    {
+        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 40, 40, TX_WHITE);
+    }
+}
+
 int main()
 {
     txCreateWindow (1200, 600);
 
 HDC image = txLoadImage ("apple.bmp");
+
+        MapObject pic[8];
+        pic[0] = {1030,20,70,70,image,false};
+        pic[1] = {1110,20,70,70,image,false};
+        pic[2] = {1030,100,70,70,image,false};
+        pic[3] = {1110,100,70,70,image,false};
+        pic[4] = {1030,180,70,70,image,false};
+        pic[5] = {1110,180,70,70,image,false};
+        pic[6] = {1030,260,70,70,image,false};
+        pic[7] = {1110,260,70,70,image,false};
 
     while (true)
     {
@@ -118,24 +146,18 @@ HDC image = txLoadImage ("apple.bmp");
         txSetColor(TX_RED);
         txRectangle(1020,10,1190,590);
 
-        Win32::TransparentBlt (txDC(), 1030, 20, 70, 70, image, 0, 0, 40, 40, TX_WHITE);
-        Win32::TransparentBlt (txDC(), 1110, 20, 70, 70, image, 0, 0, 40, 40, TX_WHITE);
-        Win32::TransparentBlt (txDC(), 1030,100, 70, 70, image, 0, 0, 40, 40, TX_WHITE);
-        Win32::TransparentBlt (txDC(), 1110,100, 70, 70, image, 0, 0, 40, 40, TX_WHITE);
-        Win32::TransparentBlt (txDC(), 1030,180, 70, 70, image, 0, 0, 40, 40, TX_WHITE);
-        Win32::TransparentBlt (txDC(), 1110,180, 70, 70, image, 0, 0, 40, 40, TX_WHITE);
-        Win32::TransparentBlt (txDC(), 1030,260, 70, 70, image, 0, 0, 40, 40, TX_WHITE);
-        Win32::TransparentBlt (txDC(), 1110,260, 70, 70, image, 0, 0, 40, 40, TX_WHITE);
+        if (GetAsyncKeyState('0'))
+        {
+            pic[0].visible = !pic[0].visible;
+        }
 
-
+        for (int nomer = 0; nomer < 8; nomer = nomer + 1)
+        {
+            drawPicture (pic[nomer]);
+        }
 
         txSleep(10);
         txEnd();
-
-
-
-
-
 
     }
     return 0;
