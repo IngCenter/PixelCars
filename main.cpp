@@ -46,11 +46,20 @@ void drawPicture(MapObject pic)
     }
 }
 
+void drawPicture2(MapObject pic)
+{
+    if (pic.visible)
+    {
+        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 486, 138, TX_WHITE);
+    }
+}
+
 int main()
 {
     txCreateWindow (1200, 600);
 
     HDC image = txLoadImage ("Pics\\apple.bmp");
+    HDC image2= txLoadImage ("Pics\\Car1.bmp");
 
     Knopka knop[10];
     knop[0] = {0, 0,   "Кузов"};
@@ -64,7 +73,7 @@ int main()
     knop[8] = {800,0, "Крылья З."};
     knop[9] = {900,10, "Пороги"};
 
-    MapObject pic[8];
+    MapObject pic[9];
     pic[0] = {1030,20,70,70,image,false};
     pic[1] = {1110,20,70,70,image,true};
     pic[2] = {1030,100,70,70,image,false};
@@ -73,6 +82,7 @@ int main()
     pic[5] = {1110,180,70,70,image,false};
     pic[6] = {1030,260,70,70,image,false};
     pic[7] = {1110,260,70,70,image,false};
+    pic[8] = {205,380,486,138,image2,false};
 
     while (true)
     {
@@ -112,6 +122,17 @@ int main()
             drawPicture (pic[nomer]);
         }
 
+        drawPicture2 (pic[8]);
+
+     if(txMouseButtons() == 1 &&
+        txMouseX() > pic[1].x &&
+        txMouseX() < pic[1].x + pic[1].shirina &&
+        txMouseY() > pic[1].y &&
+        txMouseY() < pic[1].y + pic[1].visota)
+     {
+        pic[8].visible = !pic[8].visible;
+        txSleep(200);
+     }
         txSleep(10);
         txEnd();
 
