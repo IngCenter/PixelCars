@@ -43,6 +43,15 @@ void drawPicture(MapObject pic)
     if (pic.visible)
     {
         Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 21, 21, TX_WHITE);
+        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 40, 40, TX_WHITE);
+    }
+}
+
+void drawPicture2(MapObject pic)
+{
+    if (pic.visible)
+    {
+        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 486, 138, TX_WHITE);
     }
 }
 
@@ -55,20 +64,21 @@ int main()
     HDC image = txLoadImage ("Pics\\Wheel1.bmp");
     HDC imaje = txLoadImage ("Pics\\Wheel2.bmp");
     HDC image2 = txLoadImage ("Pics\\Wheel3.bmp");
+    HDC image3= txLoadImage ("Pics\\Car1.bmp");
 
     Knopka knop[10];
-    knop[0] = {0, 0,   "Êóçîâ"};
-    knop[1] = {100, 10, "Êîëåñà"};
-    knop[2] = {200, 0, "Ñïîéëåð"};
-    knop[3] = {300,10, "Êðûøà"};
-    knop[4] = {400,0,  "Âûõëîï"};
-    knop[5] = {500,10, "Òàíèðîâêà"};
-    knop[6] = {600,0,  "Äâèãàòåëü"};
-    knop[7] = {700,10, "Êðûëüÿ Ï."};
-    knop[8] = {800,0, "Êðûëüÿ Ç."};
-    knop[9] = {900,10, "Ïîðîãè"};
+    knop[0] = {0, 0,   "ÃŠÃ³Ã§Ã®Ã¢"};
+    knop[1] = {100, 10, "ÃŠÃ®Ã«Ã¥Ã±Ã "};
+    knop[2] = {200, 0, "Ã‘Ã¯Ã®Ã©Ã«Ã¥Ã°"};
+    knop[3] = {300,10, "ÃŠÃ°Ã»Ã¸Ã "};
+    knop[4] = {400,0,  "Ã‚Ã»ÃµÃ«Ã®Ã¯"};
+    knop[5] = {500,10, "Ã’Ã Ã­Ã¨Ã°Ã®Ã¢ÃªÃ "};
+    knop[6] = {600,0,  "Ã„Ã¢Ã¨Ã£Ã Ã²Ã¥Ã«Ã¼"};
+    knop[7] = {700,10, "ÃŠÃ°Ã»Ã«Ã¼Ã¿ Ã."};
+    knop[8] = {800,0, "ÃŠÃ°Ã»Ã«Ã¼Ã¿ Ã‡."};
+    knop[9] = {900,10, "ÃÃ®Ã°Ã®Ã£Ã¨"};
 
-    MapObject pic[8];
+    MapObject pic[9];
     pic[0] = {1030,80,70,70,image,false};
     pic[1] = {1110,80,70,70,image,true};
     pic[2] = {1030,160,70,70,imaje,true};
@@ -77,6 +87,7 @@ int main()
     pic[5] = {1110,240,70,70,image2,true};
     pic[6] = {1030,320,70,70,image,false};
     pic[7] = {1110,320,70,70,image,false};
+    pic[8] = {205,380,486,138,image2,false};
 
     while (true)
     {
@@ -90,7 +101,7 @@ int main()
             drawButton(knop[nomer]);
             if (click(knop[nomer]))
             {
-                txTextOut(knop[nomer].x, knop[nomer].y + 100, "Òû ëîõ");
+                txTextOut(knop[nomer].x, knop[nomer].y + 100, "Ã’Ã» Ã«Ã®Ãµ");
             }
         }
 
@@ -116,7 +127,19 @@ int main()
             drawPicture (pic[nomer]);
         }
 
-        txSleep(10);
+        drawPicture2 (pic[8]);
+
+     if(txMouseButtons() == 1 &&
+        txMouseX() > pic[1].x &&
+        txMouseX() < pic[1].x + pic[1].shirina &&
+        txMouseY() > pic[1].y &&
+        txMouseY() < pic[1].y + pic[1].visota)
+     {
+        pic[8].visible = !pic[8].visible;
+        txSleep(200);
+     }
+
+      txSleep(10);
         txEnd();
 
     }
