@@ -64,19 +64,19 @@ int main()
     HDC image = txLoadImage ("Pics\\Wheel1.bmp");
     HDC imaje = txLoadImage ("Pics\\Wheel2.bmp");
     HDC image2 = txLoadImage ("Pics\\Wheel3.bmp");
-    HDC image3= txLoadImage ("Pics\\Car1.bmp");
+    HDC image3 = txLoadImage ("Pics\\Car1.bmp");
 
     Knopka knop[10];
-    knop[0] = {0, 0,   "ГЉГіГ§Г®Гў"};
-    knop[1] = {100, 10, "ГЉГ®Г«ГҐГ±Г "};
-    knop[2] = {200, 0, "Г‘ГЇГ®Г©Г«ГҐГ°"};
-    knop[3] = {300,10, "ГЉГ°Г»ГёГ "};
-    knop[4] = {400,0,  "Г‚Г»ГµГ«Г®ГЇ"};
-    knop[5] = {500,10, "Г’Г Г­ГЁГ°Г®ГўГЄГ "};
-    knop[6] = {600,0,  "Г„ГўГЁГЈГ ГІГҐГ«Гј"};
-    knop[7] = {700,10, "ГЉГ°Г»Г«ГјГї ГЏ."};
-    knop[8] = {800,0, "ГЉГ°Г»Г«ГјГї Г‡."};
-    knop[9] = {900,10, "ГЏГ®Г°Г®ГЈГЁ"};
+    knop[0] = {0, 0,   "Кузов"};
+    knop[1] = {100, 10, "Колеса"};
+    knop[2] = {200, 0, "Спойлер"};
+    knop[3] = {300,10, "Крыша"};
+    knop[4] = {400,0,  "Выхлоп"};
+    knop[5] = {500,10, "Танировка"};
+    knop[6] = {600,0,  "Двигатель"};
+    knop[7] = {700,10, "Крылья П."};
+    knop[8] = {800,0, "Крылья З."};
+    knop[9] = {900,10, "Пороги"};
 
     MapObject pic[9];
     pic[0] = {1030,80,70,70,image,false};
@@ -87,7 +87,7 @@ int main()
     pic[5] = {1110,240,70,70,image2,true};
     pic[6] = {1030,320,70,70,image,false};
     pic[7] = {1110,320,70,70,image,false};
-    pic[8] = {205,380,486,138,image2,false};
+    pic[8] = {205,380,486,138,image3,false};
 
     while (true)
     {
