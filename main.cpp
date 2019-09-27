@@ -42,7 +42,7 @@ void drawPicture(MapObject pic)
 {
     if (pic.visible)
     {
-        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 40, 40, TX_WHITE);
+        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 21, 21, TX_WHITE);
     }
 }
 
@@ -50,7 +50,11 @@ int main()
 {
     txCreateWindow (1200, 600);
 
-    HDC image = txLoadImage ("Pics\\apple.bmp");
+
+
+    HDC image = txLoadImage ("Pics\\Wheel1.bmp");
+    HDC imaje = txLoadImage ("Pics\\Wheel2.bmp");
+    HDC image2 = txLoadImage ("Pics\\Wheel3.bmp");
 
     Knopka knop[10];
     knop[0] = {0, 0,   "Кузов"};
@@ -65,14 +69,14 @@ int main()
     knop[9] = {900,10, "Пороги"};
 
     MapObject pic[8];
-    pic[0] = {1030,20,70,70,image,false};
-    pic[1] = {1110,20,70,70,image,true};
-    pic[2] = {1030,100,70,70,image,false};
-    pic[3] = {1110,100,70,70,image,false};
-    pic[4] = {1030,180,70,70,image,false};
-    pic[5] = {1110,180,70,70,image,false};
-    pic[6] = {1030,260,70,70,image,false};
-    pic[7] = {1110,260,70,70,image,false};
+    pic[0] = {1030,80,70,70,image,false};
+    pic[1] = {1110,80,70,70,image,true};
+    pic[2] = {1030,160,70,70,imaje,true};
+    pic[3] = {1110,160,70,70,imaje,true};
+    pic[4] = {1030,240,70,70,image2,true};
+    pic[5] = {1110,240,70,70,image2,true};
+    pic[6] = {1030,320,70,70,image,false};
+    pic[7] = {1110,320,70,70,image,false};
 
     while (true)
     {
