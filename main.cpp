@@ -1,26 +1,20 @@
+
 #include "TXLib.h"
-
-struct Knopka
-{
-     int x;
-     int y;
-     const char* text;
-};
-
-void drawButton(Knopka knop)
+void drawButton(int x , int y, const char* text)
 {
     txSetFillColor(TX_LIGHTBLUE);
-    txRectangle(knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50);
-    txDrawText (knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50, knop.text);
+    txRectangle(x + 10,y + 10,x + 100,y + 50);
+    txDrawText (x + 10,y + 10,x + 100,y + 50, text);
+
 }
 
-bool click (Knopka knop)
+bool Click (int x, int y)
 {
  if(txMouseButtons() == 1 &&
-    txMouseX() > knop.x + 10 &&
-    txMouseX() < knop.x + 100 &&
-    txMouseY() > knop.y + 10 &&
-    txMouseY() < knop.y + 50)
+    txMouseX() > x + 10 &&
+    txMouseX() < x + 100 &&
+    txMouseY() > y + 10 &&
+    txMouseY() < y + 50)
  {
   return true;
  }
@@ -42,15 +36,7 @@ void drawPicture(MapObject pic)
 {
     if (pic.visible)
     {
-        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 21, 21, TX_WHITE);
-    }
-}
-
-void drawPicture2(MapObject pic)
-{
-    if (pic.visible)
-    {
-        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 486, 138, TX_WHITE);
+        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 40, 40, TX_WHITE);
     }
 }
 
@@ -58,51 +44,99 @@ int main()
 {
     txCreateWindow (1200, 600);
 
+HDC image = txLoadImage ("apple.bmp");
 
-
-    HDC image = txLoadImage ("Pics\\Wheel1.bmp");
-    HDC imaje = txLoadImage ("Pics\\Wheel2.bmp");
-    HDC image2 = txLoadImage ("Pics\\Wheel3.bmp");
-    HDC image3 = txLoadImage ("Pics\\Car1.bmp");
-
-    Knopka knop[10];
-    knop[0] = {0, 0,   "Кузов"};
-    knop[1] = {100, 10, "Колеса"};
-    knop[2] = {200, 0, "Спойлер"};
-    knop[3] = {300,10, "Крыша"};
-    knop[4] = {400,0,  "Выхлоп"};
-    knop[5] = {500,10, "Танировка"};
-    knop[6] = {600,0,  "Двигатель"};
-    knop[7] = {700,10, "Крылья П."};
-    knop[8] = {800,0, "Крылья З."};
-    knop[9] = {900,10, "Пороги"};
-
-    MapObject pic[9];
-    pic[0] = {1030,80,70,70,image,false};
-    pic[1] = {1110,80,70,70,image,true};
-    pic[2] = {1030,160,70,70,imaje,true};
-    pic[3] = {1110,160,70,70,imaje,true};
-    pic[4] = {1030,240,70,70,image2,true};
-    pic[5] = {1110,240,70,70,image2,true};
-    pic[6] = {1030,320,70,70,image,false};
-    pic[7] = {1110,320,70,70,image,false};
-    pic[8] = {205,380,486,138,image3,false};
+        MapObject pic[8];
+        pic[0] = {1030,20,70,70,image,false};
+        pic[1] = {1110,20,70,70,image,false};
+        pic[2] = {1030,100,70,70,image,false};
+        pic[3] = {1110,100,70,70,image,false};
+        pic[4] = {1030,180,70,70,image,false};
+        pic[5] = {1110,180,70,70,image,false};
+        pic[6] = {1030,260,70,70,image,false};
+        pic[7] = {1110,260,70,70,image,false};
 
     while (true)
     {
-        txBegin();
-        txSetFillColor(TX_WHITE);
-        txClear();
-        txSetColor(TX_PINK);
 
-        for (int nomer = 0; nomer < 10; nomer = nomer + 1)
+        txBegin();
+
+        txSetFillColor(TX_WHITE);
+
+        txClear();
+
+        txSetColor(TX_LIGHTGRAY);
+
+        drawButton(0, 0,   "Кузов");
+
+        if (Click(0, 0))
         {
-            drawButton(knop[nomer]);
-            if (click(knop[nomer]))
-            {
-                txTextOut(knop[nomer].x, knop[nomer].y + 100, "Г’Г» Г«Г®Гµ");
-            }
+            txTextOut(400, 10, "ты лох");
         }
+
+        drawButton(100,10, "Колеса");
+
+        if (Click(100, 10))
+        {
+            txTextOut(500, 10, "ты лох");
+        }
+
+        drawButton(200,0,  "Спойлер");
+
+        if (Click(200, 0))
+        {
+            txTextOut(600, 10, "ты лох");
+        }
+
+        drawButton(300,10, "Крыша");
+
+        if (Click(300, 10))
+        {
+            txTextOut(700, 10, "ты лох");
+        }
+
+        drawButton(400,0,  "Выхлоп");
+
+        if (Click(400, 0))
+        {
+            txTextOut(800, 10, "ты лох");
+        }
+
+        drawButton(500,10, "Танировка");
+
+        if (Click(500, 10))
+        {
+            txTextOut(900, 10, "ты лох");
+        }
+
+        drawButton(600,0,  "Двигатель");
+
+        if (Click(600, 0))
+        {
+            txTextOut(1000, 10, "ты лох");
+        }
+
+        drawButton(700,10, "Крылья П.");
+
+        if (Click(700, 10))
+        {
+            txTextOut(1000, 10, "ты лох");
+        }
+
+        drawButton(800,0,  "Крылья З.");
+
+        if (Click(800, 0))
+        {
+            txTextOut(1000, 10, "ты лох");
+        }
+
+        drawButton(900,10, "Пороги");
+
+        if (Click(900, 10))
+        {
+            txTextOut(1000, 10, "ты лох");
+        }
+
 
         txSetFillColor(TX_BLUE);
         txSetColor(TX_PINK);
@@ -112,13 +146,9 @@ int main()
         txSetColor(TX_RED);
         txRectangle(1020,10,1190,590);
 
-        if (GetAsyncKeyState('A'))
+        if (GetAsyncKeyState('0'))
         {
             pic[0].visible = !pic[0].visible;
-        }
-        if (GetAsyncKeyState('S'))
-        {
-            pic[1].visible = !pic[1].visible;
         }
 
         for (int nomer = 0; nomer < 8; nomer = nomer + 1)
@@ -126,22 +156,10 @@ int main()
             drawPicture (pic[nomer]);
         }
 
-        drawPicture2 (pic[8]);
-
-     if(txMouseButtons() == 1 &&
-        txMouseX() > pic[1].x &&
-        txMouseX() < pic[1].x + pic[1].shirina &&
-        txMouseY() > pic[1].y &&
-        txMouseY() < pic[1].y + pic[1].visota)
-     {
-        pic[8].visible = !pic[8].visible;
-        txSleep(200);
-     }
-
-      txSleep(10);
+        txSleep(10);
         txEnd();
 
     }
-
     return 0;
 }
+
