@@ -36,6 +36,9 @@ struct MapObject
     int visota;
     HDC image;
     bool visible;
+    int scr_width;
+    int scr_heigth;
+
 };
 
 void drawPicture(MapObject pic)
@@ -50,7 +53,7 @@ void drawPicture2(MapObject pic)
 {
     if (pic.visible)
     {
-        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 486, 138, TX_WHITE);
+        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, pic.scr_width, pic.scr_heigth, TX_WHITE);
     }
 }
 
@@ -65,6 +68,7 @@ int main()
     HDC image2 = txLoadImage ("Pics\\Wheel3.bmp");
     HDC image3 = txLoadImage ("Pics\\Car1.bmp");
 
+
     Knopka knop[10];
     knop[0] = {0, 0,   "Кузов"};
     knop[1] = {100, 10, "Колеса"};
@@ -77,7 +81,7 @@ int main()
     knop[8] = {800,0, "Крылья З."};
     knop[9] = {900,10, "Пороги"};
 
-    MapObject pic[9];
+    MapObject pic[10];
     pic[0] = {1030,80,70,70,image,false};
     pic[1] = {1110,80,70,70,image,true};
     pic[2] = {1030,160,70,70,imaje,true};
@@ -86,8 +90,8 @@ int main()
     pic[5] = {1110,240,70,70,image2,true};
     pic[6] = {1030,320,70,70,image,false};
     pic[7] = {1110,320,70,70,image,false};
-    pic[8] = {205,380,486,138,image3,false};
-
+    pic[8] = {205,380,486,138,txLoadImage ("Pics\\Car1.bmp"),false,486,138};
+    pic[9] = {205,180,363,113,txLoadImage ("Pics\\Car2.bmp"),false,363,113};
     while (true)
     {
         txBegin();
@@ -127,6 +131,7 @@ int main()
         }
 
         drawPicture2 (pic[8]);
+        drawPicture2 (pic[9]);
 
      if(txMouseButtons() == 1 &&
         txMouseX() > pic[1].x &&
@@ -135,6 +140,7 @@ int main()
         txMouseY() < pic[1].y + pic[1].visota)
      {
         pic[8].visible = !pic[8].visible;
+        pic[9].visible = !pic[9].visible;
         txSleep(200);
      }
 
