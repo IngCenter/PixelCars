@@ -1,61 +1,5 @@
 #include "TXLib.h"
-
-struct Knopka
-{
-     int x;
-     int y;
-     const char* text;
-};
-
-void drawButton(Knopka knop)
-{
-    txSetFillColor(TX_LIGHTBLUE);
-    txRectangle(knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50);
-    txDrawText (knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50, knop.text);
-}
-
-bool click (Knopka knop)
-{
- if(txMouseButtons() == 1 &&
-    txMouseX() > knop.x + 10 &&
-    txMouseX() < knop.x + 100 &&
-    txMouseY() > knop.y + 10 &&
-    txMouseY() < knop.y + 50)
- {
-  return true;
- }
-
-  return false;
-}
-
-struct MapObject
-{
-    int x;
-    int y;
-    int shirina;
-    int visota;
-    HDC image;
-    bool visible;
-    int scr_width;
-    int scr_heigth;
-
-};
-
-void drawPicture(MapObject pic)
-{
-    if (pic.visible)
-    {
-        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, 21, 21, TX_WHITE);
-    }
-}
-
-void drawPicture2(MapObject pic)
-{
-    if (pic.visible)
-    {
-        Win32::TransparentBlt (txDC(), pic.x, pic.y, pic.shirina, pic.visota, pic.image, 0, 0, pic.scr_width, pic.scr_heigth, TX_WHITE);
-    }
-}
+#include "Struct.cpp"
 
 int main()
 {
@@ -82,14 +26,12 @@ int main()
     knop[9] = {900,10, "Ïîðîãè"};
 
     MapObject pic[10];
-    pic[0] = {1030,80,70,70,txLoadImage ("Pics\\Wheel1.bmp"),false};
-    pic[1] = {1110,80,70,70,txLoadImage ("Pics\\Wheel1.bmp"),true};
-    pic[2] = {1030,160,70,70,txLoadImage ("Pics\\Wheel2.bmp"),true};
-    pic[3] = {1110,160,70,70,txLoadImage ("Pics\\Wheel2.bmp"),true};
-    pic[4] = {1030,240,70,70,txLoadImage ("Pics\\Wheel3.bmp"),true};
-    pic[5] = {1110,240,70,70,txLoadImage ("Pics\\Wheel3.bmp"),true};
-    pic[6] = {1030,320,70,70,txLoadImage ("Pics\\Wheel1.bmp"),false};
-    pic[7] = {1110,320,70,70,txLoadImage ("Pics\\Wheel1.bmp"),false};
+    pic[0] = {1030,80,140,70,txLoadImage ("Pics\\Car1.bmp"),false,486,138};
+    pic[1] = {1030,160,140,70,txLoadImage ("Pics\\Car2.bmp"),false,363,113};
+    pic[2] = {1030,160,70,70,txLoadImage ("Pics\\Wheel2.bmp"),true,21,21};
+    pic[3] = {1110,160,70,70,txLoadImage ("Pics\\Wheel2.bmp"),true,21,21};
+    pic[4] = {1030,240,70,70,txLoadImage ("Pics\\Wheel3.bmp"),true,21,21};
+    pic[5] = {1110,240,70,70,txLoadImage ("Pics\\Wheel3.bmp"),true,21,21};
 
     MapObject mapParts[10];
     mapParts[0] = {205,380,486,138,txLoadImage ("Pics\\Car1.bmp"),false,486,138};
@@ -109,12 +51,7 @@ int main()
         for (int nomer = 0; nomer < 10; nomer = nomer + 1)
         {
             drawButton(knop[nomer]);
-            if (click(knop[nomer]))
-            {
-                txTextOut(knop[nomer].x, knop[nomer].y + 100, "Ã’Ã» Ã«Ã®Ãµ");
-            }
         }
-
         txSetFillColor(TX_BLUE);
         txSetColor(TX_PINK);
         txRectangle(100,100,825,525);
@@ -132,68 +69,59 @@ int main()
             pic[1].visible = !pic[1].visible;
         }
 
-        for (int nomer = 0; nomer < 8; nomer = nomer + 1)
+        for (int nomer = 0; nomer < 10; nomer = nomer + 1)
         {
-            drawPicture (pic[nomer]);
+            drawPicture2 (pic[nomer]);
+            drawPicture2 (mapParts[nomer]);
         }
 
-        drawPicture2 (mapParts[0]);
-        drawPicture2 (mapParts[1]);
-        drawPicture2 (mapParts[2]);
-        drawPicture2 (mapParts[3]);
-        drawPicture2 (mapParts[4]);
-        drawPicture2 (mapParts[5]);
+        for (int a = 0; a < 10; a++)
+        {
+            if (txMouseButtons() == 1 &&
+                txMouseX() > pic[a].x &&
+                txMouseX() < pic[a].x + pic[a].shirina &&
+                txMouseY() > pic[a].y &&
+                txMouseY() < pic[a].y + pic[a].visota &&
+                pic[a].visible)
+            {
+                mapParts[a].visible = !mapParts[a].visible;
+                txSleep(200);
+            }
+        }
+
 
         if (txMouseButtons() == 1 &&
-            txMouseX() > pic[1].x &&
-            txMouseX() < pic[1].x + pic[1].shirina &&
-            txMouseY() > pic[1].y &&
-            txMouseY() < pic[1].y + pic[1].visota)
+            txMouseX() > knop[0].x &&
+            txMouseX() < knop[0].x + 100 &&
+            txMouseY() > knop[0].y &&
+            txMouseY() < knop[0].y + 50)
         {
-            mapParts[0].visible = !mapParts[0].visible;
-            mapParts[1].visible = !mapParts[1].visible;
+            for (int nomer = 0; nomer < 10; nomer = nomer + 1)
+            {
+                pic[nomer].visible = false;
+            }
+            pic[0].visible = true;
+            pic[1].visible = true;
             txSleep(200);
         }
 
         if (txMouseButtons() == 1 &&
-            txMouseX() > pic[2].x &&
-            txMouseX() < pic[2].x + pic[2].shirina &&
-            txMouseY() > pic[2].y &&
-            txMouseY() < pic[2].y + pic[2].visota)
+            txMouseX() > knop[1].x &&
+            txMouseX() < knop[1].x + 100 &&
+            txMouseY() > knop[1].y &&
+            txMouseY() < knop[1].y + 50)
         {
-            mapParts[2].visible = !mapParts[2].visible;
+            for (int nomer = 0; nomer < 10; nomer = nomer + 1)
+            {
+                pic[nomer].visible = false;
+            }
+            pic[2].visible = true;
+            pic[3].visible = true;
+            pic[4].visible = true;
+            pic[5].visible = true;
             txSleep(200);
         }
 
-        if (txMouseButtons() == 1 &&
-            txMouseX() > pic[3].x &&
-            txMouseX() < pic[3].x + pic[3].shirina &&
-            txMouseY() > pic[3].y &&
-            txMouseY() < pic[3].y + pic[3].visota)
-        {
-            mapParts[3].visible = !mapParts[3].visible;
-            txSleep(200);
-        }
-
-        if (txMouseButtons() == 1 &&
-            txMouseX() > pic[4].x &&
-            txMouseX() < pic[4].x + pic[4].shirina &&
-            txMouseY() > pic[4].y &&
-            txMouseY() < pic[4].y + pic[4].visota)
-        {
-            mapParts[4].visible = !mapParts[4].visible;
-            txSleep(200);
-        }
-
-        if (txMouseButtons() == 1 &&
-            txMouseX() > pic[5].x &&
-            txMouseX() < pic[5].x + pic[5].shirina &&
-            txMouseY() > pic[5].y &&
-            txMouseY() < pic[5].y + pic[5].visota)
-        {
-            mapParts[5].visible = !mapParts[5].visible;
-            txSleep(200);
-        }
 
       txSleep(10);
         txEnd();
