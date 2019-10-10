@@ -100,7 +100,7 @@ int main()
                 txMouseX() < pic[a].x + pic[a].shirina &&
                 txMouseY() > pic[a].y &&
                 txMouseY() < pic[a].y + pic[a].visota &&
-                pic[a].visible)
+                pic[a].category == category)
             {
                 mapParts[a].visible = !mapParts[a].visible;
                 txSleep(200);
