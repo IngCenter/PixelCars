@@ -7,16 +7,16 @@ int main()
 
     txSelectFont ("Comic Sans MS", 20);
     Knopka knop[10];
-    knop[0] = {0, 0,   "Кузов"};
-    knop[1] = {100, 10, "Колеса"};
-    knop[2] = {200, 0, "Спойлер"};
-    knop[3] = {300,10, "Крыша"};
-    knop[4] = {400,0,  "Выхлоп"};
-    knop[5] = {500,10, "Тонировка"};
-    knop[6] = {600,0,  "Двигатель"};
-    knop[7] = {700,10, "Крылья П."};
-    knop[8] = {800,0, "Крылья З."};
-    knop[9] = {900,10, "Пороги"};
+    knop[0] = {0, 0,   "ДГіГ§Г®Гў"};
+    knop[1] = {100, 10, "ДГ®Г«ДєЕ„Е•"};
+    knop[2] = {200, 0, "ЕѓДЏГ®Г©Г«ДєД‘"};
+    knop[3] = {300,10, "ДД‘Е±Е™Е•"};
+    knop[4] = {400,0,  "Г‚Е±Е‘Г«Г®ДЏ"};
+    knop[5] = {500,10, "Е‡Г®Г­ДЌД‘Г®ГўД™Е•"};
+    knop[6] = {600,0,  "Г„ГўДЌДѓЕ•Е€ДєГ«Гј"};
+    knop[7] = {700,10, "ДД‘Е±Г«ГјЛ™ ДЋ."};
+    knop[8] = {800,0, "ДД‘Е±Г«ГјЛ™ Г‡."};
+    knop[9] = {900,10, "ДЋГ®Д‘Г®ДѓДЌ"};
 
     char* category;
     char* category2;
@@ -35,7 +35,8 @@ int main()
     pic[9] = {1110,240,70,70,  txLoadImage ("Pics\\Wheel3.bmp"),true,21,21,"WheelRight"};
     pic[10]= {1030,80,70,70,   txLoadImage ("Pics\\Spoler.bmp"),true,40,40,"Spoler"};
     pic[11]= {1030,200,70,30,  txLoadImage ("Pics\\Spoler2.bmp"),true,25,8,"Spoler"};
-
+    pic[12] ={1030,240,70,30,  txLoadImage ("Pics\\Spoler3.bmp"),true,60,8,"Spoler"};
+    pic[13] ={1030,240,70,30,  txLoadImage ("Pics\\Spoler4.bmp"),true,65,8,"Spoler"};
 
     MapObject mapParts[COUNT_PICS];
     mapParts[0] =  {205,380,486,138,txLoadImage ("Pics\\Car1.bmp")  ,false,486,138,""};
@@ -50,11 +51,8 @@ int main()
     mapParts[9] =  {560,450,63,63,  txLoadImage ("Pics\\Wheel3.bmp"),false,21,21,""};
     mapParts[10]=  {600,353,100,100,txLoadImage ("Pics\\Spoler.bmp"),false,40,40,""};
     mapParts[11]=  {600,353,100,100,txLoadImage ("Pics\\Spoler2.bmp"),false,25,8,""};
-
-
-
-
-
+    mapParts[12] ={640,300,137,137, txLoadImage ("Pics\\Spoler3.bmp"),false,60,60,""};
+    mapParts[13] ={680,253,174,174, txLoadImage ("Pics\\Spoler4.bmp"),true,65,8,"Spoler"};
 
     while (!GetAsyncKeyState(VK_ESCAPE))
     {
@@ -109,6 +107,13 @@ int main()
 
                 txSleep(200);
             }
+        }
+
+
+       if (click(knop[3]))
+        {
+            category = "Roof";
+            txSleep(200);
         }
 
         if (click(knop[2]))
