@@ -7,16 +7,16 @@ int main()
 
     txSelectFont ("Comic Sans MS", 20);
     Knopka knop[10];
-    knop[0] = {0, 0,   "ГЉГіГ§Г®Гў"};
-    knop[1] = {100, 10, "ГЉГ®Г«ГҐГ±Г "};
-    knop[2] = {200, 0, "Г‘ГЇГ®Г©Г«ГҐГ°"};
-    knop[3] = {300,10, "ГЉГ°Г»ГёГ "};
-    knop[4] = {400,0,  "Г‚Г»ГµГ«Г®ГЇ"};
-    knop[5] = {500,10, "Г’Г®Г­ГЁГ°Г®ГўГЄГ "};
-    knop[6] = {600,0,  "Г„ГўГЁГЈГ ГІГҐГ«Гј"};
-    knop[7] = {700,10, "ГЉГ°Г»Г«ГјГї ГЏ."};
-    knop[8] = {800,0, "ГЉГ°Г»Г«ГјГї Г‡."};
-    knop[9] = {900,10, "ГЏГ®Г°Г®ГЈГЁ"};
+    knop[0] = {0, 0,   "Кузов"};
+    knop[1] = {100, 10, "Колеса"};
+    knop[2] = {200, 0, "Спойлер"};
+    knop[3] = {300,10, "Крыша"};
+    knop[4] = {400,0,  "Выхлоп"};
+    knop[5] = {500,10, "Тонировка"};
+    knop[6] = {600,0,  "Двигатель"};
+    knop[7] = {700,10, "Крылья П."};
+    knop[8] = {800,0, "Крылья З."};
+    knop[9] = {900,10, "Пороги"};
 
     char* category;
     char* category2;
@@ -45,12 +45,12 @@ int main()
     pic[19] ={1030,320,70,30,  txLoadImage ("Pics\\Spoler4.bmp"),true,65,8,"Spoler"};
 
     MapObject mapParts[COUNT_PICS];
-    mapParts[0] =  {205,380,486,138,txLoadImage ("Pics\\Car1.bmp")  ,false,486,138,""};
+    mapParts[0] =  {205,380,486,138, pic[0].image ,false,486,138,""};
     mapParts[1] =  {190,370,510,155,txLoadImage ("Pics\\Car2.bmp")  ,false,363,113,""};
     mapParts[2] =  {225,378,450,140,txLoadImage ("Pics\\Car3.bmp")  ,false,525,151,""};
     mapParts[3] =  {230,385,470,130,txLoadImage ("Pics\\Car4.bmp")  ,false,457,135,""};
     mapParts[4] =  {210,383,500,140, txLoadImage ("Pics\\Car5.bmp")  ,false,311,89,""};
-    mapParts[5] =  {600,351,311,89, txLoadImage ("Pics\\Car6.bmp")  ,false,311,89,""};
+    mapParts[5] =  {210,383,500,140, txLoadImage ("Pics\\Car6.bmp")  ,false,311,89,""};
     mapParts[6] =  {280,450,63,63,  txLoadImage ("Pics\\Wheel2.bmp"),false,21,21,""};
     mapParts[7] =  {560,450,63,63,  txLoadImage ("Pics\\Wheel2.bmp"),false,21,21,""};
     mapParts[8] =  {280,450,63,63,  txLoadImage ("Pics\\Wheel3.bmp"),false,21,21,""};
