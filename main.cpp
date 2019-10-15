@@ -42,8 +42,8 @@ int main()
     mapParts[0] =  {205,380,486,138,txLoadImage ("Pics\\Car1.bmp")  ,false,486,138,""};
     mapParts[1] =  {190,370,510,155,txLoadImage ("Pics\\Car2.bmp")  ,false,363,113,""};
     mapParts[2] =  {225,378,450,140,txLoadImage ("Pics\\Car3.bmp")  ,false,525,151,""};
-    mapParts[3] =  {600,351,457,135,txLoadImage ("Pics\\Car4.bmp")  ,false,457,135,""};
-    mapParts[4] =  {600,351,311,89, txLoadImage ("Pics\\Car5.bmp")  ,false,311,89,""};
+    mapParts[3] =  {230,385,470,130,txLoadImage ("Pics\\Car4.bmp")  ,false,457,135,""};
+    mapParts[4] =  {210,383,500,140, txLoadImage ("Pics\\Car5.bmp")  ,false,311,89,""};
     mapParts[5] =  {600,351,311,89, txLoadImage ("Pics\\Car6.bmp")  ,false,311,89,""};
     mapParts[6] =  {280,450,63,63,  txLoadImage ("Pics\\Wheel2.bmp"),false,21,21,""};
     mapParts[7] =  {560,450,63,63,  txLoadImage ("Pics\\Wheel2.bmp"),false,21,21,""};
@@ -113,12 +113,14 @@ int main()
        if (click(knop[3]))
         {
             category = "Roof";
+            category2 = "Roof";
             txSleep(200);
         }
 
         if (click(knop[2]))
         {
             category = "Spoler";
+            category2 = "Spoler";
             txSleep(200);
         }
 
@@ -132,6 +134,7 @@ int main()
         if (click(knop[0]))
         {
             category = "Car";
+            category2 = "Car";
             txSleep(200);
         }
 
