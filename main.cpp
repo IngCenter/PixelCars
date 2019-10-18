@@ -18,6 +18,7 @@ int main()
     knop[8] = {800,0, "Крылья З."};
     knop[9] = {900,10, "Пороги"};
 
+
     char* category;
     char* category2;
     int COUNT_PICS = 20;
@@ -66,6 +67,8 @@ int main()
     mapParts[18]=  {640,300,137,137,txLoadImage ("Pics\\Spoler3.bmp"),false,64,30,""};
     mapParts[19]=  {680,253,174,174,txLoadImage ("Pics\\Spoler4.bmp"),false,65,8,"Spoler"};
 
+    int nomer_Pics = -5;
+
     while (!GetAsyncKeyState(VK_ESCAPE))
     {
         txBegin();
@@ -76,6 +79,18 @@ int main()
         for (int nomer = 0; nomer < 10; nomer = nomer + 1)
         {
             drawButton(knop[nomer]);
+        }
+
+        for (int a = 0; a < COUNT_PICS; a++)
+        {
+
+            if (txMouseButtons() == 1 &&
+                txMouseX() > pic[a].x &&
+                txMouseX() < pic[a].x + pic[a].shirina &&
+                txMouseY() > pic[a].y &&
+                txMouseY() < pic[a].y + pic[a].visota)
+            {
+            }
         }
 
         txSetFillColor(TX_LIGHTGRAY);
@@ -163,3 +178,4 @@ int main()
 
     return 0;
 }
+;;
