@@ -46,26 +46,41 @@ int main()
     pic[19] ={1030,320,70,30,  txLoadImage ("Pics\\Spoler4.bmp"),true,65,8,"Spoler"};
 
     MapObject mapParts[COUNT_PICS];
-    mapParts[0] =  {205,380,486,138, pic[0].image ,false,486,138,""};
-    mapParts[1] =  {190,370,510,155,txLoadImage ("Pics\\Car2.bmp")  ,false,363,113,""};
-    mapParts[2] =  {225,378,450,140,txLoadImage ("Pics\\Car3.bmp")  ,false,525,151,""};
-    mapParts[3] =  {230,385,470,130,txLoadImage ("Pics\\Car4.bmp")  ,false,457,135,""};
-    mapParts[4] =  {210,383,500,140, txLoadImage ("Pics\\Car5.bmp")  ,false,311,89,""};
-    mapParts[5] =  {210,383,500,140, txLoadImage ("Pics\\Car6.bmp")  ,false,311,89,""};
-    mapParts[6] =  {280,450,63,63,  txLoadImage ("Pics\\Wheel2.bmp"),false,21,21,""};
-    mapParts[7] =  {560,450,63,63,  txLoadImage ("Pics\\Wheel2.bmp"),false,21,21,""};
-    mapParts[8] =  {280,450,63,63,  txLoadImage ("Pics\\Wheel3.bmp"),false,21,21,""};
-    mapParts[9] =  {560,450,63,63,  txLoadImage ("Pics\\Wheel3.bmp"),false,21,21,""};
-    mapParts[10] =  {280,450,63,63,  txLoadImage ("Pics\\Wheel1.bmp"),false,21,21,""};
-    mapParts[11] =  {560,450,63,63,  txLoadImage ("Pics\\Wheel1.bmp"),false,21,21,""};
-    mapParts[12] =  {280,450,63,63,  txLoadImage ("Pics\\Wheel4.bmp"),false,21,21,""};
-    mapParts[13] =  {560,450,63,63,  txLoadImage ("Pics\\Wheel4.bmp"),false,21,21,""};
-    mapParts[14] =  {280,450,63,63,  txLoadImage ("Pics\\Wheel5.bmp"),false,21,21,""};
-    mapParts[15] =  {560,450,63,63,  txLoadImage ("Pics\\Wheel5.bmp"),false,21,21,""};
-    mapParts[16]=  {600,353,100,100,txLoadImage ("Pics\\Spoler.bmp"),false,40,40,""};
-    mapParts[17]=  {600,353,100,100,txLoadImage ("Pics\\Spoler2.bmp"),false,25,8,""};
-    mapParts[18]=  {640,300,137,137,txLoadImage ("Pics\\Spoler3.bmp"),false,64,30,""};
-    mapParts[19]=  {680,253,174,174,txLoadImage ("Pics\\Spoler4.bmp"),false,65,8,"Spoler"};
+    mapParts[0]  =  {205,380,486,138};
+    mapParts[1]  =  {190,370,510,155};
+    mapParts[2]  =  {225,378,450,140};
+    mapParts[3]  =  {230,385,470,130};
+    mapParts[4]  =  {210,383,500,140};
+    mapParts[5]  =  {210,383,500,140};
+
+    mapParts[16] =  {600,353,100,100};
+    mapParts[17] =  {600,353,100,100};
+    mapParts[18]=  {640,300,137,137};
+    mapParts[19]=  {680,253,174,174};
+
+    for (int i = 0; i < COUNT_PICS; i++)
+    {
+        mapParts[i].image = pic[i].image;
+        mapParts[i].scr_heigth = pic[i].scr_heigth;
+        mapParts[i].scr_width = pic[i].scr_width;
+        mapParts[i].visible = false;
+        mapParts[i].category = pic[i].category;
+
+        if (pic[i].category == "WheelLeft")
+        {
+            mapParts[i].x = 280;
+            mapParts[i].y = 450;
+            mapParts[i].shirina = 63;
+            mapParts[i].visota = 63;
+        }
+        if (pic[i].category == "WheelRight")
+        {
+            mapParts[i].x = 560;
+            mapParts[i].y = 450;
+            mapParts[i].shirina = 63;
+            mapParts[i].visota = 63;
+        }
+    }
 
     int nomer_Pics = -5;
 
