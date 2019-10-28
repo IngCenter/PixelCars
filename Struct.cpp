@@ -1,5 +1,25 @@
 #include "TXLib.h"
 
+int get_height  (string adress)
+{
+  unsigned char info[54];
+  FILE*f = fopen (adress.c_str() , "r");
+  fread (info, sizeof (unsigned char), 54, f);
+  int height =* (int*) &info[22];
+
+  return height;
+}
+
+int get_widht  (string adress)
+{
+  unsigned char info[54];
+  FILE*f = fopen (adress.c_str() , "r");
+  fread (info, sizeof (unsigned char), 54, f);
+  int widht =* (int*) &info[18];
+
+  return widht;
+}
+
 struct Knopka
 {
      int x;
@@ -34,11 +54,12 @@ struct MapObject
     int y;
     int shirina;
     int visota;
+    string adress;
+    char* category;
     HDC image;
     bool visible;
     int scr_width;
     int scr_heigth;
-    char* category;
 };
 
 void drawPicture(MapObject pic)
