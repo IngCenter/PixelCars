@@ -24,26 +24,34 @@ int main()
     int COUNT_PICS = 20;
 
     MapObject pic[COUNT_PICS];
-    pic[0] = {1030,80,140,70,  txLoadImage ("Pics\\Car1.bmp"),  true,486,138,"Car"};
-    pic[1] = {1030,160,140,70, txLoadImage ("Pics\\Car2.bmp"),  true,363,113,"Car"};
-    pic[2] = {1030,240,140,70, txLoadImage ("Pics\\Car3.bmp"),  true,525,151,"Car"};
-    pic[3] = {1030,320,140,70, txLoadImage ("Pics\\Car4.bmp"),  true,457,135,"Car"};
-    pic[4] = {1030,400,140,70, txLoadImage ("Pics\\Car5.bmp"),  true,311,89,"Car"};
-    pic[5] = {1030,480,140,70, txLoadImage ("Pics\\Car6.bmp"),  true,311,89,"Car"};
-    pic[6] = {1030,80,70,70,  txLoadImage ("Pics\\Wheel2.bmp"),true,21,21,"WheelLeft"};
-    pic[7] = {1110,80,70,70,  txLoadImage ("Pics\\Wheel2.bmp"),true,21,21,"WheelRight"};
-    pic[8] = {1030,160,70,70,  txLoadImage ("Pics\\Wheel3.bmp"),true,21,21,"WheelLeft"};
-    pic[9] = {1110,160,70,70,  txLoadImage ("Pics\\Wheel3.bmp"),true,21,21,"WheelRight"};
-    pic[10] = {1030,240,70,70,  txLoadImage ("Pics\\Wheel1.bmp"),true,21,21,"WheelLeft"};
-    pic[11] = {1110,240,70,70,  txLoadImage ("Pics\\Wheel1.bmp"),true,21,21,"WheelRight"};
-    pic[12] = {1030,320,70,70,  txLoadImage ("Pics\\Wheel4.bmp"),true,21,21,"WheelLeft"};
-    pic[13] = {1110,320,70,70,  txLoadImage ("Pics\\Wheel4.bmp"),true,21,21,"WheelRight"};
-    pic[14] = {1030,400,70,70,  txLoadImage ("Pics\\Wheel5.bmp"),true,21,21,"WheelLeft"};
-    pic[15] = {1110,400,70,70,  txLoadImage ("Pics\\Wheel5.bmp"),true,21,21,"WheelRight"};
-    pic[16]= {1030,80,70,70,   txLoadImage ("Pics\\Spoler.bmp"),true,40,40,"Spoler"};
-    pic[17]= {1030,160,70,30,  txLoadImage ("Pics\\Spoler2.bmp"),true,25,8,"Spoler"};
-    pic[18] ={1030,240,70,30,  txLoadImage ("Pics\\Spoler3.bmp"),true,64,30,"Spoler"};
-    pic[19] ={1030,320,70,30,  txLoadImage ("Pics\\Spoler4.bmp"),true,65,8,"Spoler"};
+    pic[0] = {1030, 80,140,70,"Pics\\Car1.bmp", "Car"};
+    pic[1] = {1030,160,140,70,"Pics\\Car2.bmp", "Car"};
+    pic[2] = {1030,240,140,70,"Pics\\Car3.bmp", "Car"};
+    pic[3] = {1030,320,140,70,"Pics\\Car4.bmp", "Car"};
+    pic[4] = {1030,400,140,70,"Pics\\Car5.bmp","Car"};
+    pic[5] = {1030,480,140,70,"Pics\\Car6.bmp","Car"};
+    pic[6] = {1030,80,70,70,  "Pics\\Wheel2.bmp","WheelLeft"};
+    pic[7] = {1110,80,70,70,  "Pics\\Wheel2.bmp","WheelRight"};
+    pic[8] = {1030,160,70,70, "Pics\\Wheel3.bmp","WheelLeft"};
+    pic[9] = {1110,160,70,70, "Pics\\Wheel3.bmp","WheelRight"};
+    pic[10]= {1030,240,70,70,"Pics\\Wheel1.bmp","WheelLeft"};
+    pic[11]= {1110,240,70,70,"Pics\\Wheel1.bmp","WheelRight"};
+    pic[12]= {1030,320,70,70,"Pics\\Wheel4.bmp","WheelLeft"};
+    pic[13]= {1110,320,70,70,"Pics\\Wheel4.bmp","WheelRight"};
+    pic[14]= {1030,400,70,70,"Pics\\Wheel5.bmp","WheelLeft"};
+    pic[15]= {1110,400,70,70,"Pics\\Wheel5.bmp","WheelRight"};
+    pic[16]= {1030,80,70,70,  "Pics\\Spoler.bmp","Spoler"};
+    pic[17]= {1030,160,70,70, "Pics\\Spoler2.bmp","Spoler"};
+    pic[18]= {1030,240,70,30, "Pics\\Spoler3.bmp","Spoler"};
+    pic[19]= {1030,320,70,30, "Pics\\Spoler4.bmp","Spoler"};
+
+    for (int i = 0; i < COUNT_PICS; i++)
+    {
+        pic[i].image   = txLoadImage(pic[i].adress.c_str());
+        pic[i].scr_width  = get_widht(pic[i].adress);
+        pic[i].scr_heigth = get_height(pic[i].adress);
+        pic[i].visible    = true;
+    }
 
     MapObject mapParts[COUNT_PICS];
     mapParts[0]  =  {205,380,486,138};
@@ -151,6 +159,50 @@ int main()
             }
         }
 
+        for(int a = 0; a < COUNT_PICS; a++)
+        {
+          if (mapParts[a].visible &&
+               (txMouseButtons() == 1 &&
+                txMouseX() > mapParts[a].x &&
+                txMouseX() < mapParts[a].x + mapParts[a].shirina &&
+                txMouseY() > mapParts[a].y &&
+                txMouseY() < mapParts[a].y + mapParts[a].visota))
+          {
+              nomer_Pics = a;
+          }
+        }
+
+        if (nomer_Pics >= 0 && GetAsyncKeyState(VK_LEFT))
+           {
+             mapParts[nomer_Pics].x -= 3;
+
+           }
+        if (nomer_Pics >= 0 && GetAsyncKeyState(VK_RIGHT))
+           {
+             mapParts[nomer_Pics].x += 3;
+           }
+
+         if (nomer_Pics >= 0 && GetAsyncKeyState(VK_UP))
+           {
+             mapParts[nomer_Pics].y -= 3;
+           }
+
+        if (nomer_Pics >= 0 && GetAsyncKeyState(VK_DOWN))
+           {
+             mapParts[nomer_Pics].y += 3;
+           }
+
+        if (nomer_Pics >= 0 && GetAsyncKeyState('X'))
+           {
+             mapParts[nomer_Pics].shirina = mapParts[nomer_Pics].shirina * 1.03;
+             mapParts[nomer_Pics].visota  = mapParts[nomer_Pics].visota * 1.03;
+           }
+
+        if (nomer_Pics >= 0 && GetAsyncKeyState('Z'))
+           {
+             mapParts[nomer_Pics].shirina = mapParts[nomer_Pics].shirina * 0.99;
+             mapParts[nomer_Pics].visota  = mapParts[nomer_Pics].visota * 0.99;
+           }
 
        if (click(knop[3]))
         {
