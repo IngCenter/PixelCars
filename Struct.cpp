@@ -25,6 +25,8 @@ struct Knopka
      int x;
      int y;
      const char* text;
+     char* category;
+     char* category2;
 };
 
 void drawButton(Knopka knop)

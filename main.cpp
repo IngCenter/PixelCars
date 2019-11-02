@@ -7,16 +7,16 @@ int main()
 
     txSelectFont ("Comic Sans MS", 20);
     Knopka knop[10];
-    knop[0] = {0, 0,   "Кузов"};
-    knop[1] = {100, 10, "Колеса"};
-    knop[2] = {200, 0, "Спойлер"};
-    knop[3] = {300,10, "Крыша"};
-    knop[4] = {400,0,  "Выхлоп"};
-    knop[5] = {500,10, "Тонировка"};
-    knop[6] = {600,0,  "Двигатель"};
-    knop[7] = {700,10, "Крылья П."};
-    knop[8] = {800,0, "Крылья З."};
-    knop[9] = {900,10, "Пороги"};
+    knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
+    knop[1] = {100, 10, "Колеса", "WheelLeft" , "WheelRight" };
+    knop[2] = {200, 0, "Спойлер", "Spoler" , "Spoler" };
+    knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
+    knop[4] = {400,0,  "Выхлоп", "Vihlop" , "Vihlop" };
+    knop[5] = {500,10, "Тонировка", "Tonirovka" , "Tonirovka" };
+    knop[6] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
+    knop[7] = {700,10, "Крылья П.", "Krilia P." , "Krilia P." };
+    knop[8] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
+    knop[9] = {900,10, "Пороги", "Porogi" , "Porogi" };
 
 
     char* category;
@@ -182,7 +182,7 @@ int main()
              mapParts[nomer_Pics].x += 3;
            }
 
-         if (nomer_Pics >= 0 && GetAsyncKeyState(VK_UP))
+        if (nomer_Pics >= 0 && GetAsyncKeyState(VK_UP))
            {
              mapParts[nomer_Pics].y -= 3;
            }
@@ -204,33 +204,16 @@ int main()
              mapParts[nomer_Pics].visota  = mapParts[nomer_Pics].visota * 0.99;
            }
 
-       if (click(knop[3]))
+        //выбор категории
+        for (int nomer = 0; nomer < 10; nomer = nomer + 1)
         {
-            category = "Roof";
-            category2 = "Roof";
-            txSleep(200);
+            if (click(knop[nomer]))
+            {
+                category  = knop[nomer].category;
+                category2 = knop[nomer].category2;
+            }
         }
 
-        if (click(knop[2]))
-        {
-            category = "Spoler";
-            category2 = "Spoler";
-            txSleep(200);
-        }
-
-        if (click(knop[1]))
-        {
-            category = "WheelLeft";
-            category2 = "WheelRight";
-            txSleep(200);
-        }
-
-        if (click(knop[0]))
-        {
-            category = "Car";
-            category2 = "Car";
-            txSleep(200);
-        }
 
         txSleep(10);
         txEnd();
