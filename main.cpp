@@ -47,7 +47,11 @@ int main()
 
     for (int i = 0; i < COUNT_PICS; i++)
     {
-        pic[i].image   = txLoadImage(pic[i].adress.c_str());
+        string strochka = pic[i].adress;
+        int pos1 = strochka.find("\\");
+        int pos2 = strochka.find("\\", pos1 + 1);
+        pic[i].category = strochka.substr(pos1 + 1, pos2 - pos1 - 1);
+        pic[i].image      = txLoadImage(pic[i].adress.c_str());
         pic[i].scr_width  = get_widht(pic[i].adress);
         pic[i].scr_heigth = get_height(pic[i].adress);
         pic[i].visible    = true;
