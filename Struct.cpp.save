@@ -25,8 +25,6 @@ struct Knopka
      int x;
      int y;
      const char* text;
-     string category;
-     string category2;
 };
 
 void drawButton(Knopka knop)
@@ -57,11 +55,11 @@ struct MapObject
     int shirina;
     int visota;
     string adress;
-    string category;
     HDC image;
     bool visible;
     int scr_width;
     int scr_heigth;
+    char* category;
 };
 
 void drawPicture(MapObject pic)
