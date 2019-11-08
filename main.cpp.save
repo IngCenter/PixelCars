@@ -57,11 +57,17 @@ int main()
         int pos2 = stroka.find("\\", pos1 + 1);
         pic[i].category = stroka.substr(pos1 + 1, pos2 - pos1 - 1);
 
-        if (pic[i].category == "Wheel" && i % 2 == 1)
+        if (pic[i].category == "Wheel")
         {
-            pic[i-1].category ="WheelLeft";
+            pic[i].category ="WheelLeft";
             pic[i].category ="WheelRight";
         }
+        
+        if (pic[i].category == "Wheel")
+        {
+        
+        }
+        
     }
 
     MapObject mapParts[COUNT_PICS];
