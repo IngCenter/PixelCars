@@ -1,5 +1,8 @@
 #include "TXLib.h"
 #include "Struct.cpp"
+#include <fstream>
+
+using namespace std;
 
 int main()
 {
@@ -57,17 +60,11 @@ int main()
         int pos2 = stroka.find("\\", pos1 + 1);
         pic[i].category = stroka.substr(pos1 + 1, pos2 - pos1 - 1);
 
-        if (pic[i].category == "Wheel")
+        if (pic[i].category == "Wheel" && i % 2 == 1)
         {
-            pic[i].category ="WheelLeft";
+            pic[i-1].category ="WheelLeft";
             pic[i].category ="WheelRight";
         }
-        
-        if (pic[i].category == "Wheel")
-        {
-        
-        }
-        
     }
 
     MapObject mapParts[COUNT_PICS];
@@ -85,6 +82,7 @@ int main()
 
     for (int i = 0; i < COUNT_PICS; i++)
     {
+        mapParts[i].adress = pic[i].adress;
         mapParts[i].image = pic[i].image;
         mapParts[i].scr_heigth = pic[i].scr_heigth;
         mapParts[i].scr_width = pic[i].scr_width;
@@ -104,6 +102,28 @@ int main()
             mapParts[i].y = 450;
             mapParts[i].shirina = 63;
             mapParts[i].visota = 63;
+        }
+    }
+
+
+
+    string stroka_x;
+    string stroka_y;
+    string stroka_adress;
+    ifstream file ("1.txt");
+
+    getline(file, stroka_x);
+    getline(file, stroka_y);
+    getline(file, stroka_adress);
+
+    for (int i = 0; i < COUNT_PICS; i++)
+    {
+        if (stroka_adress == mapParts[i].adress && 
+        category == mapParts[i].category)
+        {
+            mapParts[i].x = atoi(stroka_x.c_str());
+            mapParts[i].y = atoi(stroka_y.c_str());
+            mapParts[i].visible = true;
         }
     }
 
