@@ -14,13 +14,14 @@ int main()
     knop[4] = {400,0,  "Выхлоп", "Vihlop" , "Vihlop" };
     knop[5] = {500,10, "Тонировка", "Tonirovka" , "Tonirovka" };
     knop[6] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
-    knop[7] = {700,10, "Крылья П.", "Krilia P." , "Krilia P." };
+    knop[7] = {700,10, "Справка", "Krilia P." , "Krilia P." };
     knop[8] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
     knop[9] = {900,10, "Пороги", "Porogi" , "Porogi" };
 
 
     string category;
     string category2;
+    int pageSpravka = 0;
     int COUNT_PICS = 20;
 
     MapObject pic[COUNT_PICS];
@@ -45,6 +46,8 @@ int main()
     pic[18]= {1030,240,70,30, "Pics\\Spoler\\Spoler3.bmp","Spoler"};
     pic[19]= {1030,320,70,30, "Pics\\Spoler\\Spoler4.bmp","Spoler"};
 
+
+
     for (int i = 0; i < COUNT_PICS; i++)
     {
         pic[i].image   = txLoadImage(pic[i].adress.c_str());
@@ -57,17 +60,11 @@ int main()
         int pos2 = stroka.find("\\", pos1 + 1);
         pic[i].category = stroka.substr(pos1 + 1, pos2 - pos1 - 1);
 
-        if (pic[i].category == "Wheel")
+        if (pic[i].category == "Wheel" && i % 2 == 1)
         {
-            pic[i].category ="WheelLeft";
+            pic[i-1].category ="WheelLeft";
             pic[i].category ="WheelRight";
         }
-        
-        if (pic[i].category == "Wheel")
-        {
-        
-        }
-        
     }
 
     MapObject mapParts[COUNT_PICS];
@@ -106,131 +103,171 @@ int main()
             mapParts[i].visota = 63;
         }
     }
+    string visota;
+    string shirina;
+    ifstream file ("Puk.txt");
 
-    int nomer_Pics = -5;
 
+    getline(file,visota);
+    getline(file,shirina);
+    
+    mapParts[19].x = atoi(visota.c_str());
+    mapParts[19].y = atoi(shirina.c_str());
+    mapParts[19].visible = true;
+
+//Форма выбора картинок
     while (!GetAsyncKeyState(VK_ESCAPE))
     {
         txBegin();
-        txSetFillColor(TX_WHITE);
-        txClear();
-        txSetColor(TX_BLUE);
 
-        for (int nomer = 0; nomer < 10; nomer = nomer + 1)
-        {
-            drawButton(knop[nomer]);
-        }
-
-        for (int a = 0; a < COUNT_PICS; a++)
+        if ( pageSpravka == 0 )
         {
 
-            if (txMouseButtons() == 1 &&
-                txMouseX() > pic[a].x &&
-                txMouseX() < pic[a].x + pic[a].shirina &&
-                txMouseY() > pic[a].y &&
-                txMouseY() < pic[a].y + pic[a].visota)
+            txSetFillColor(TX_WHITE);
+            txClear();
+            txSetColor(TX_BLUE);
+
+            for (int nomer = 0; nomer < 10; nomer = nomer + 1)
             {
+                drawButton(knop[nomer]);
             }
-        }
 
-        txSetFillColor(TX_LIGHTGRAY);
-        txSetColor(TX_BLUE);
-        txRectangle(100,100,825,525);
+            txSetFillColor(TX_LIGHTGRAY);
+            txSetColor(TX_BLUE);
+            txRectangle(100,100,825,525);
 
-        txSetFillColor(TX_WHITE);
-        txSetColor(TX_RED);
-        txRectangle(1020,10,1190,590);
+            txSetFillColor(TX_WHITE);
+            txSetColor(TX_RED);
+            txRectangle(1020,10,1190,590);
 
-        for (int nomer = 0; nomer < COUNT_PICS; nomer = nomer + 1)
-        {
-            if (pic[nomer].category == category || pic[nomer].category == category2)
+            for (int nomer = 0; nomer < COUNT_PICS; nomer = nomer + 1)
             {
-                drawPicture2 (pic[nomer]);
-            }
-            drawPicture2 (mapParts[nomer]);
-        }
-
-
-        for (int a = 0; a < COUNT_PICS; a++)
-        {
-            if (txMouseButtons() == 1 &&
-                txMouseX() > pic[a].x &&
-                txMouseX() < pic[a].x + pic[a].shirina &&
-                txMouseY() > pic[a].y &&
-                txMouseY() < pic[a].y + pic[a].visota &&
-                (pic[a].category == category || pic[a].category == category2))
-            {
-                mapParts[a].visible = !mapParts[a].visible;
-
-                for (int n = 0; n < COUNT_PICS; n++)
+                if (pic[nomer].category == category || pic[nomer].category == category2)
                 {
-                    if (mapParts[a].visible &&
-                        a != n &&
-                        pic[n].category == pic[a].category)
-                    {
-                        mapParts[n].visible = false;
-                    }
+                    drawPicture2 (pic[nomer]);
                 }
+                drawPicture2 (mapParts[nomer]);
+            }
 
+
+            for (int a = 0; a < COUNT_PICS; a++)
+            {
+                if (txMouseButtons() == 1 &&
+                    txMouseX() > pic[a].x &&
+                    txMouseX() < pic[a].x + pic[a].shirina &&
+                    txMouseY() > pic[a].y &&
+                    txMouseY() < pic[a].y + pic[a].visota &&
+                    (pic[a].category == category || pic[a].category == category2))
+                {
+                    mapParts[a].visible = !mapParts[a].visible;
+
+                    for (int n = 0; n < COUNT_PICS; n++)
+                    {
+                        if (mapParts[a].visible &&
+                            a != n &&
+                            pic[n].category == pic[a].category)
+                        {
+                            mapParts[n].visible = false;
+                        }
+                    }
+
+                    txSleep(200);
+                }
+            }
+
+            for(int a = 0; a < COUNT_PICS; a++)
+            {
+              if (mapParts[a].visible &&
+                   (txMouseButtons() == 1 &&
+                    txMouseX() > mapParts[a].x &&
+                    txMouseX() < mapParts[a].x + mapParts[a].shirina &&
+                    txMouseY() > mapParts[a].y &&
+                    txMouseY() < mapParts[a].y + mapParts[a].visota))
+              {
+                  nomer_Pics = a;
+              }
+            }
+
+            if (nomer_Pics >= 0 && GetAsyncKeyState(VK_LEFT))
+               {
+                 mapParts[nomer_Pics].x -= 3;
+
+               }
+            if (nomer_Pics >= 0 && GetAsyncKeyState(VK_RIGHT))
+               {
+                 mapParts[nomer_Pics].x += 3;
+               }
+
+            if (nomer_Pics >= 0 && GetAsyncKeyState(VK_UP))
+               {
+                 mapParts[nomer_Pics].y -= 3;
+               }
+
+            if (nomer_Pics >= 0 && GetAsyncKeyState(VK_DOWN))
+               {
+                 mapParts[nomer_Pics].y += 3;
+               }
+
+            if (nomer_Pics >= 0 && GetAsyncKeyState('X'))
+               {
+                 mapParts[nomer_Pics].shirina = mapParts[nomer_Pics].shirina * 1.03;
+                 mapParts[nomer_Pics].visota  = mapParts[nomer_Pics].visota * 1.03;
+               }
+
+            if (nomer_Pics >= 0 && GetAsyncKeyState('Z'))
+               {
+                 mapParts[nomer_Pics].shirina = mapParts[nomer_Pics].shirina * 0.99;
+                 mapParts[nomer_Pics].visota  = mapParts[nomer_Pics].visota * 0.99;
+               }
+
+            //выбор категории
+            for (int nomer = 0; nomer < 10; nomer = nomer + 1)
+            {
+                if (click(knop[nomer]))
+                {
+                    category  = knop[nomer].category;
+                    category2 = knop[nomer].category2;
+                }
+            }
+
+            if (click(knop[7]))
+            {
+                pageSpravka = 1;
+                knop[7].text = "назад";
+                txSleep(200);
+            }
+
+        }
+
+        if ( pageSpravka == 1 )
+
+        {
+
+            txSetFillColor(TX_WHITE);
+            txClear();
+            txSetColor(TX_BLUE);
+
+            drawButton(knop[7]);
+
+            txSetFillColor(TX_LIGHTGRAY);
+            txSetColor(TX_BLUE);
+            txRectangle(100,100,825,525);
+            txDrawText ( 300, 100 , 800 , 450 ,
+                "Данная программа позволяет сделать машину\n"
+                " из различных деталей ,\n"
+                " \n"
+                " Авторы: Великий Марсель и просто Дима\n"
+                " \n"
+                " Найдете косяк - пинайте Диму\n"
+                " Хотите поблагодарить - вот номер карты Марселя\n"
+                " 4276 6900 1234 5678\n");
+            if (click(knop[7]))
+            {
+                pageSpravka = 0;
+                knop[7].text = "Справка";
                 txSleep(200);
             }
         }
-
-        for(int a = 0; a < COUNT_PICS; a++)
-        {
-          if (mapParts[a].visible &&
-               (txMouseButtons() == 1 &&
-                txMouseX() > mapParts[a].x &&
-                txMouseX() < mapParts[a].x + mapParts[a].shirina &&
-                txMouseY() > mapParts[a].y &&
-                txMouseY() < mapParts[a].y + mapParts[a].visota))
-          {
-              nomer_Pics = a;
-          }
-        }
-
-        if (nomer_Pics >= 0 && GetAsyncKeyState(VK_LEFT))
-           {
-             mapParts[nomer_Pics].x -= 3;
-
-           }
-        if (nomer_Pics >= 0 && GetAsyncKeyState(VK_RIGHT))
-           {
-             mapParts[nomer_Pics].x += 3;
-           }
-
-        if (nomer_Pics >= 0 && GetAsyncKeyState(VK_UP))
-           {
-             mapParts[nomer_Pics].y -= 3;
-           }
-
-        if (nomer_Pics >= 0 && GetAsyncKeyState(VK_DOWN))
-           {
-             mapParts[nomer_Pics].y += 3;
-           }
-
-        if (nomer_Pics >= 0 && GetAsyncKeyState('X'))
-           {
-             mapParts[nomer_Pics].shirina = mapParts[nomer_Pics].shirina * 1.03;
-             mapParts[nomer_Pics].visota  = mapParts[nomer_Pics].visota * 1.03;
-           }
-
-        if (nomer_Pics >= 0 && GetAsyncKeyState('Z'))
-           {
-             mapParts[nomer_Pics].shirina = mapParts[nomer_Pics].shirina * 0.99;
-             mapParts[nomer_Pics].visota  = mapParts[nomer_Pics].visota * 0.99;
-           }
-
-        //выбор категории
-        for (int nomer = 0; nomer < 10; nomer = nomer + 1)
-        {
-            if (click(knop[nomer]))
-            {
-                category  = knop[nomer].category;
-                category2 = knop[nomer].category2;
-            }
-        }
-
 
         txSleep(10);
         txEnd();

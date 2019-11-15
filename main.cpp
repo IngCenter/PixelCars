@@ -1,5 +1,8 @@
 #include "TXLib.h"
 #include "Struct.cpp"
+#include <fstream>
+
+using namespace std;
 
 int main()
 {
@@ -101,10 +104,24 @@ int main()
             mapParts[i].y = 450;
             mapParts[i].shirina = 63;
             mapParts[i].visota = 63;
+
+
         }
     }
 
     int nomer_Pics = -5;
+
+    string visota;
+    string shirina;
+    ifstream file ("Puk.txt");
+
+
+    getline(file,visota);
+    getline(file,shirina);
+
+    mapParts[19].x = atoi(visota.c_str());
+    mapParts[19].y = atoi(shirina.c_str());
+    mapParts[19].visible = true;
 
 //Форма выбора картинок
     while (!GetAsyncKeyState(VK_ESCAPE))
