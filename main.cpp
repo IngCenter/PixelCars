@@ -1,5 +1,8 @@
 #include "TXLib.h"
 #include "Struct.cpp"
+#include <fstream>
+
+using namespace std;
 
 int main()
 {
@@ -31,20 +34,20 @@ int main()
     pic[3] = {1030,320,140,70,"Pics\\Car\\Car4.bmp"};
     pic[4] = {1030,400,140,70,"Pics\\Car\\Car5.bmp"};
     pic[5] = {1030,480,140,70,"Pics\\Car\\Car6.bmp"};
-    pic[6] = {1030,80,70,70,  "Pics\\Wheel\\Wheel2.bmp","WheelLeft"};
-    pic[7] = {1110,80,70,70,  "Pics\\Wheel\\Wheel2.bmp","WheelRight"};
-    pic[8] = {1030,160,70,70, "Pics\\Wheel\\Wheel3.bmp","WheelLeft"};
-    pic[9] = {1110,160,70,70, "Pics\\Wheel\\Wheel3.bmp","WheelRight"};
-    pic[10]= {1030,240,70,70,"Pics\\Wheel\\Wheel1.bmp","WheelLeft"};
-    pic[11]= {1110,240,70,70,"Pics\\Wheel\\Wheel1.bmp","WheelRight"};
-    pic[12]= {1030,320,70,70,"Pics\\Wheel\\Wheel4.bmp","WheelLeft"};
-    pic[13]= {1110,320,70,70,"Pics\\Wheel\\Wheel4.bmp","WheelRight"};
-    pic[14]= {1030,400,70,70,"Pics\\Wheel\\Wheel5.bmp","WheelLeft"};
-    pic[15]= {1110,400,70,70,"Pics\\Wheel\\Wheel5.bmp","WheelRight"};
-    pic[16]= {1030,80,70,70,  "Pics\\Spoler\\Spoler.bmp","Spoler"};
-    pic[17]= {1030,160,70,70, "Pics\\Spoler\\Spoler2.bmp","Spoler"};
-    pic[18]= {1030,240,70,30, "Pics\\Spoler\\Spoler3.bmp","Spoler"};
-    pic[19]= {1030,320,70,30, "Pics\\Spoler\\Spoler4.bmp","Spoler"};
+    pic[6] = {1030,80,70,70,  "Pics\\Wheel\\Wheel2.bmp"};
+    pic[7] = {1110,80,70,70,  "Pics\\Wheel\\Wheel2.bmp"};
+    pic[8] = {1030,160,70,70, "Pics\\Wheel\\Wheel3.bmp"};
+    pic[9] = {1110,160,70,70, "Pics\\Wheel\\Wheel3.bmp"};
+    pic[10]= {1030,240,70,70,"Pics\\Wheel\\Wheel1.bmp"};
+    pic[11]= {1110,240,70,70,"Pics\\Wheel\\Wheel1.bmp"};
+    pic[12]= {1030,320,70,70,"Pics\\Wheel\\Wheel4.bmp"};
+    pic[13]= {1110,320,70,70,"Pics\\Wheel\\Wheel4.bmp"};
+    pic[14]= {1030,400,70,70,"Pics\\Wheel\\Wheel5.bmp"};
+    pic[15]= {1110,400,70,70,"Pics\\Wheel\\Wheel5.bmp"};
+    pic[16]= {1030,80,70,70,  "Pics\\Spoler\\Spoler.bmp"};
+    pic[17]= {1030,160,70,70, "Pics\\Spoler\\Spoler2.bmp"};
+    pic[18]= {1030,240,70,30, "Pics\\Spoler\\Spoler3.bmp"};
+    pic[19]= {1030,320,70,30, "Pics\\Spoler\\Spoler4.bmp"};
 
 
 
@@ -82,6 +85,7 @@ int main()
 
     for (int i = 0; i < COUNT_PICS; i++)
     {
+        mapParts[i].adress = pic[i].adress;
         mapParts[i].image = pic[i].image;
         mapParts[i].scr_heigth = pic[i].scr_heigth;
         mapParts[i].scr_width = pic[i].scr_width;
@@ -104,16 +108,46 @@ int main()
         }
     }
 
+    string stroka;
+    string stroka_x;
+    string stroka_y;
+    string stroka_adress;
+    string stroka_category;
+    ifstream file ("1.txt");
+
+    while (file.good())
+    {
+        getline(file, stroka_x);
+        getline(file, stroka_y);
+        getline(file, stroka_adress);
+        getline(file, stroka_category);
+        getline(file, stroka);
+
+        for (int i = 0; i < COUNT_PICS; i++)
+        {
+            if (stroka_adress == mapParts[i].adress &&
+                stroka_category == mapParts[i].category)
+            {
+                mapParts[i].x = atoi(stroka_x.c_str());
+                mapParts[i].y = atoi(stroka_y.c_str());
+                mapParts[i].visible = true;
+            }
+        }
+    }
+
+    file.close();
+
+
+
     int nomer_Pics = -5;
 
-//Форма выбора картинок
+    //Форма выбора картинок
     while (!GetAsyncKeyState(VK_ESCAPE))
     {
         txBegin();
 
         if ( pageSpravka == 0 )
         {
-
             txSetFillColor(TX_WHITE);
             txClear();
             txSetColor(TX_BLUE);
@@ -231,9 +265,7 @@ int main()
         }
 
         if ( pageSpravka == 1 )
-
         {
-
             txSetFillColor(TX_WHITE);
             txClear();
             txSetColor(TX_BLUE);
@@ -273,4 +305,3 @@ int main()
 
     return 0;
 }
-;;
