@@ -77,7 +77,7 @@ void Dvizenie(MapObject mapParts[], int nomer_Pics)
         }
 }
 
-void RisovanieVsehCortinok(MapObject mapParts[], MapObject pic[], int COUNT_PICS, string category, string category2)
+void RisovanieVsehCortinok()
 {
         for (int nomer = 0; nomer < COUNT_PICS; nomer = nomer + 1)
         {
@@ -85,8 +85,10 @@ void RisovanieVsehCortinok(MapObject mapParts[], MapObject pic[], int COUNT_PICS
                 {
                     drawPicture2 (pic[nomer]);
                 }
-            drawPicture2 (mapParts[nomer]);
-        }
+                    drawPicture2 (mapParts[nomer]);
+                }
+
+
 }
 
 
