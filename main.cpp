@@ -9,23 +9,23 @@ int main()
     txCreateWindow (1200, 600);
 
     txSelectFont ("Comic Sans MS", 20);
-    Knopka knop[10];
+    Knopka knop[6];
     knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
     knop[1] = {100, 10, "Колеса", "WheelLeft" , "WheelRight" };
     knop[2] = {200, 0, "Спойлер", "Spoler" , "Spoler" };
-    knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
-    knop[4] = {400,0,  "Выхлоп", "Vihlop" , "Vihlop" };
-    knop[5] = {500,10, "Тонировка", "Tonirovka" , "Tonirovka" };
-    knop[6] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
-    knop[7] = {700,10, "Справка", "Krilia P." , "Krilia P." };
-    knop[8] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
-    knop[9] = {900,10, "Пороги", "Porogi" , "Porogi" };
+    //knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
+    //knop[4] = {400,0,  "Выхлоп", "Vihlop" , "Vihlop" };
+    //knop[5] = {500,10, "Тонировка", "Tonirovka" , "Tonirovka" };
+    //knop[6] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
+    knop[3] = {700,10, "Справка", "Krilia P." , "Krilia P." };
+    knop[4] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
+    knop[5] = {900,10, "Пороги", "Porogi" , "Porogi" };
 
 
     string category;
     string category2;
     int pageSpravka = 0;
-    int COUNT_PICS = 20;
+    int COUNT_PICS = 22;
 
     MapObject pic[COUNT_PICS];
     pic[0] = {1030, 80,140,70,"Pics\\Car\\Car1.bmp"};
@@ -48,8 +48,8 @@ int main()
     pic[17]= {1030,160,70,70, "Pics\\Spoler\\Spoler2.bmp"};
     pic[18]= {1030,240,70,30, "Pics\\Spoler\\Spoler3.bmp"};
     pic[19]= {1030,320,70,30, "Pics\\Spoler\\Spoler4.bmp"};
-
-
+    pic[20]= {1030,400,70,30, "Pics\\Porogi\\Porog1.bmp"};
+    pic[21]= {1060,450,70,30, "Pics\\Porogi\\Porog2.bmp"};
 
     for (int i = 0; i < COUNT_PICS; i++)
     {
@@ -82,6 +82,9 @@ int main()
     mapParts[17] =  {600,353,100,100};
     mapParts[18]=  {640,300,137,137};
     mapParts[19]=  {680,253,174,174};
+
+    mapParts[20]=  {350,485,200,17};
+    mapParts[21]=  {350,485,200,17};
 
     for (int i = 0; i < COUNT_PICS; i++)
     {
@@ -152,7 +155,7 @@ int main()
             txClear();
             txSetColor(TX_BLUE);
 
-            for (int nomer = 0; nomer < 10; nomer = nomer + 1)
+            for (int nomer = 0; nomer < 6; nomer = nomer + 1)
             {
                 drawButton(knop[nomer]);
             }
@@ -246,7 +249,7 @@ int main()
                }
 
             //выбор категории
-            for (int nomer = 0; nomer < 10; nomer = nomer + 1)
+            for (int nomer = 0; nomer < 6; nomer = nomer + 1)
             {
                 if (click(knop[nomer]))
                 {
@@ -255,10 +258,10 @@ int main()
                 }
             }
 
-            if (click(knop[7]))
+            if (click(knop[3]))
             {
                 pageSpravka = 1;
-                knop[7].text = "назад";
+                knop[3].text = "назад";
                 txSleep(200);
             }
 
@@ -270,7 +273,7 @@ int main()
             txClear();
             txSetColor(TX_BLUE);
 
-            drawButton(knop[7]);
+            drawButton(knop[4]);
 
             txSetFillColor(TX_LIGHTGRAY);
             txSetColor(TX_BLUE);
@@ -284,10 +287,10 @@ int main()
                 " Найдете косяк - пинайте Диму\n"
                 " Хотите поблагодарить - вот номер карты Марселя\n"
                 " 4276 6900 1234 5678\n");
-            if (click(knop[7]))
+            if (click(knop[4]))
             {
                 pageSpravka = 0;
-                knop[7].text = "Справка";
+                knop[3].text = "Справка";
                 txSleep(200);
             }
         }
