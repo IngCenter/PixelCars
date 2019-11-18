@@ -1,6 +1,7 @@
 #include "TXLib.h"
 #include "Button.cpp"
-#include "Struct.cpp"
+#include "Files.cpp"
+#include "MapObject.cpp"
 #include <fstream>
 
 using namespace std;
@@ -14,16 +15,16 @@ int main()
 
     txSelectFont ("Comic Sans MS", 20);
     Knopka knop[6];
-    knop[0] = {0, 0,   "ГЉГіГ§Г®Гў", "Car" , "Car"};
-    knop[1] = {100, 10, "ГЉГ®Г«ГҐГ±Г ", "WheelLeft" , "WheelRight" };
-    knop[2] = {200, 0, "Г‘ГЇГ®Г©Г«ГҐГ°", "Spoler" , "Spoler" };
-    //knop[3] = {300,10, "ГЉГ°Г»ГёГ ", "Krisha" , "Krisha" };
-    //knop[4] = {400,0,  "Г‚Г»ГµГ«Г®ГЇ", "Vihlop" , "Vihlop" };
-    //knop[5] = {500,10, "Г’Г®Г­ГЁГ°Г®ГўГЄГ ", "Tonirovka" , "Tonirovka" };
-    //knop[6] = {600,0,  "Г„ГўГЁГЈГ ГІГҐГ«Гј", "Dvigatel" , "Dvigatel" };
-    knop[3] = {700,10, "Г‘ГЇГ°Г ГўГЄГ ", "Krilia P." , "Krilia P." };
-    knop[4] = {800,0, "ГЉГ°Г»Г«ГјГї Г‡.", "Krilia S." , "Krilia S." };
-    knop[5] = {900,10, "ГЏГ®Г°Г®ГЈГЁ", "Porogi" , "Porogi" };
+    knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
+    knop[1] = {100, 10, "Колеса", "WheelLeft" , "WheelRight" };
+    knop[2] = {200, 0, "Спойлер", "Spoler" , "Spoler" };
+    //knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
+    //knop[4] = {400,0,  "Выхлоп", "Vihlop" , "Vihlop" };
+    //knop[5] = {500,10, "Тонировка", "Tonirovka" , "Tonirovka" };
+    //knop[6] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
+    knop[3] = {700,10, "Справка", "Krilia P." , "Krilia P." };
+    knop[4] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
+    knop[5] = {900,10, "Пороги", "Porogi" , "Porogi" };
 
 
     string category;
@@ -75,20 +76,20 @@ int main()
     }
 
     MapObject mapParts[COUNT_PICS];
-    mapParts[0]  =  {205,380,486,138};
-    mapParts[1]  =  {190,370,510,155};
-    mapParts[2]  =  {225,378,450,140};
-    mapParts[3]  =  {230,385,470,130};
+    mapParts[0]  =  {210,383,500,140};
+    mapParts[1]  =  {210,383,500,140};
+    mapParts[2]  =  {210,383,500,140};
+    mapParts[3]  =  {210,383,500,140};
     mapParts[4]  =  {210,383,500,140};
     mapParts[5]  =  {210,383,500,140};
 
     mapParts[16] =  {600,353,100,100};
     mapParts[17] =  {600,353,100,100};
-    mapParts[18]=  {640,300,137,137};
-    mapParts[19]=  {680,253,174,174};
+    mapParts[18] =  {600,353,100,100};
+    mapParts[19] =  {600,353,100,100};
 
-    mapParts[20]=  {350,485,200,17};
-    mapParts[21]=  {350,485,200,17};
+    mapParts[20] =  {350,485,200,17};
+    mapParts[21] =  {350,485,200,17};
 
     for (int i = 0; i < COUNT_PICS; i++)
     {
@@ -148,14 +149,13 @@ int main()
 
     int nomer_Pics = -5;
 
-    //Г”Г®Г°Г¬Г  ГўГ»ГЎГ®Г°Г  ГЄГ Г°ГІГЁГ­Г®ГЄ
     while (!GetAsyncKeyState(VK_ESCAPE))
     {
         txBegin();
 
         if ( pageSpravka == REDACTOR )
         {
-            drawFon(10, knop);
+            drawFon(6, knop);
 
             RisovanieVsehCortinok(mapParts, pic, COUNT_PICS, category, category2);
 
@@ -199,9 +199,9 @@ int main()
 
             Dvizenie(mapParts, nomer_Pics);
 
-            //ГўГ»ГЎГ®Г° ГЄГ ГІГҐГЈГ®Г°ГЁГЁ
-            category  = selectCategory(knop, 10, category);
-            category2  = selectCategory2(knop, 10, category2);
+            //Select a category
+            category  = selectCategory(knop, 6, category);
+            category2  = selectCategory2(knop, 6, category2);
 
             if (click(knop[3]))
             {
@@ -224,13 +224,13 @@ int main()
             txSetColor(TX_BLUE);
             txRectangle(100,100,825,525);
             txDrawText ( 300, 100 , 800 , 450 ,
-                "Г„Г Г­Г­Г Гї ГЇГ°Г®ГЈГ°Г Г¬Г¬Г  ГЇГ®Г§ГўГ®Г«ГїГҐГІ Г±Г¤ГҐГ«Г ГІГј Г¬Г ГёГЁГ­Гі\n"
-                " ГЁГ§ Г°Г Г§Г«ГЁГ·Г­Г»Гµ Г¤ГҐГІГ Г«ГҐГ© ,\n"
+                "Данная программа позволяет сделать машину\n"
+                " из различных деталей ,\n"
                 " \n"
-                " ГЂГўГІГ®Г°Г»: Г‚ГҐГ«ГЁГЄГЁГ© ГЊГ Г°Г±ГҐГ«Гј ГЁ ГЇГ°Г®Г±ГІГ® Г„ГЁГ¬Г \n"
+                " Авторы: Великий Марсель и просто Дима\n"
                 " \n"
-                " ГЌГ Г©Г¤ГҐГІГҐ ГЄГ®Г±ГїГЄ - ГЇГЁГ­Г Г©ГІГҐ Г„ГЁГ¬Гі\n"
-                " Г•Г®ГІГЁГІГҐ ГЇГ®ГЎГ«Г ГЈГ®Г¤Г Г°ГЁГІГј - ГўГ®ГІ Г­Г®Г¬ГҐГ° ГЄГ Г°ГІГ» ГЊГ Г°Г±ГҐГ«Гї\n"
+                " Найдете косяк - пинайте Диму\n"
+                " Хотите поблагодарить - вот номер карты Марселя\n"
                 " 4276 6900 1234 5678\n");
             if (click(knop[3]))
             {

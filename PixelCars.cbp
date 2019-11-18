@@ -32,7 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="Struct.cpp" />
+		<Unit filename="Button.cpp" />
+		<Unit filename="Files.cpp" />
+		<Unit filename="MapObject.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
