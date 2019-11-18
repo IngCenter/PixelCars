@@ -1,8 +1,12 @@
 #include "TXLib.h"
+#include "Button.cpp"
 #include "Struct.cpp"
 #include <fstream>
 
 using namespace std;
+
+const int SPRAVKA = 1;
+const int REDACTOR = 0;
 
 int main()
 {
@@ -10,16 +14,16 @@ int main()
 
     txSelectFont ("Comic Sans MS", 20);
     Knopka knop[6];
-    knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
-    knop[1] = {100, 10, "Колеса", "WheelLeft" , "WheelRight" };
-    knop[2] = {200, 0, "Спойлер", "Spoler" , "Spoler" };
-    //knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
-    //knop[4] = {400,0,  "Выхлоп", "Vihlop" , "Vihlop" };
-    //knop[5] = {500,10, "Тонировка", "Tonirovka" , "Tonirovka" };
-    //knop[6] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
-    knop[3] = {700,10, "Справка", "Krilia P." , "Krilia P." };
-    knop[4] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
-    knop[5] = {900,10, "Пороги", "Porogi" , "Porogi" };
+    knop[0] = {0, 0,   "ГЉГіГ§Г®Гў", "Car" , "Car"};
+    knop[1] = {100, 10, "ГЉГ®Г«ГҐГ±Г ", "WheelLeft" , "WheelRight" };
+    knop[2] = {200, 0, "Г‘ГЇГ®Г©Г«ГҐГ°", "Spoler" , "Spoler" };
+    //knop[3] = {300,10, "ГЉГ°Г»ГёГ ", "Krisha" , "Krisha" };
+    //knop[4] = {400,0,  "Г‚Г»ГµГ«Г®ГЇ", "Vihlop" , "Vihlop" };
+    //knop[5] = {500,10, "Г’Г®Г­ГЁГ°Г®ГўГЄГ ", "Tonirovka" , "Tonirovka" };
+    //knop[6] = {600,0,  "Г„ГўГЁГЈГ ГІГҐГ«Гј", "Dvigatel" , "Dvigatel" };
+    knop[3] = {700,10, "Г‘ГЇГ°Г ГўГЄГ ", "Krilia P." , "Krilia P." };
+    knop[4] = {800,0, "ГЉГ°Г»Г«ГјГї Г‡.", "Krilia S." , "Krilia S." };
+    knop[5] = {900,10, "ГЏГ®Г°Г®ГЈГЁ", "Porogi" , "Porogi" };
 
 
     string category;
@@ -133,7 +137,7 @@ int main()
             {
                 mapParts[i].x = atoi(stroka_x.c_str());
                 mapParts[i].y = atoi(stroka_y.c_str());
-                mapParts[i].visible = true;
+                mapParts[i].visible = false;
             }
         }
     }
@@ -144,39 +148,16 @@ int main()
 
     int nomer_Pics = -5;
 
-    //Форма выбора картинок
+    //Г”Г®Г°Г¬Г  ГўГ»ГЎГ®Г°Г  ГЄГ Г°ГІГЁГ­Г®ГЄ
     while (!GetAsyncKeyState(VK_ESCAPE))
     {
         txBegin();
 
-        if ( pageSpravka == 0 )
+        if ( pageSpravka == REDACTOR )
         {
-            txSetFillColor(TX_WHITE);
-            txClear();
-            txSetColor(TX_BLUE);
+            drawFon(10, knop);
 
-            for (int nomer = 0; nomer < 6; nomer = nomer + 1)
-            {
-                drawButton(knop[nomer]);
-            }
-
-            txSetFillColor(TX_LIGHTGRAY);
-            txSetColor(TX_BLUE);
-            txRectangle(100,100,825,525);
-
-            txSetFillColor(TX_WHITE);
-            txSetColor(TX_RED);
-            txRectangle(1020,10,1190,590);
-
-            for (int nomer = 0; nomer < COUNT_PICS; nomer = nomer + 1)
-            {
-                if (pic[nomer].category == category || pic[nomer].category == category2)
-                {
-                    drawPicture2 (pic[nomer]);
-                }
-                drawPicture2 (mapParts[nomer]);
-            }
-
+            RisovanieVsehCortinok(mapParts, pic, COUNT_PICS, category, category2);
 
             for (int a = 0; a < COUNT_PICS; a++)
             {
@@ -216,58 +197,22 @@ int main()
               }
             }
 
-            if (nomer_Pics >= 0 && GetAsyncKeyState(VK_LEFT))
-               {
-                 mapParts[nomer_Pics].x -= 3;
+            Dvizenie(mapParts, nomer_Pics);
 
-               }
-            if (nomer_Pics >= 0 && GetAsyncKeyState(VK_RIGHT))
-               {
-                 mapParts[nomer_Pics].x += 3;
-               }
-
-            if (nomer_Pics >= 0 && GetAsyncKeyState(VK_UP))
-               {
-                 mapParts[nomer_Pics].y -= 3;
-               }
-
-            if (nomer_Pics >= 0 && GetAsyncKeyState(VK_DOWN))
-               {
-                 mapParts[nomer_Pics].y += 3;
-               }
-
-            if (nomer_Pics >= 0 && GetAsyncKeyState('X'))
-               {
-                 mapParts[nomer_Pics].shirina = mapParts[nomer_Pics].shirina * 1.03;
-                 mapParts[nomer_Pics].visota  = mapParts[nomer_Pics].visota * 1.03;
-               }
-
-            if (nomer_Pics >= 0 && GetAsyncKeyState('Z'))
-               {
-                 mapParts[nomer_Pics].shirina = mapParts[nomer_Pics].shirina * 0.99;
-                 mapParts[nomer_Pics].visota  = mapParts[nomer_Pics].visota * 0.99;
-               }
-
-            //выбор категории
-            for (int nomer = 0; nomer < 6; nomer = nomer + 1)
-            {
-                if (click(knop[nomer]))
-                {
-                    category  = knop[nomer].category;
-                    category2 = knop[nomer].category2;
-                }
-            }
+            //ГўГ»ГЎГ®Г° ГЄГ ГІГҐГЈГ®Г°ГЁГЁ
+            category  = selectCategory(knop, 10, category);
+            category2  = selectCategory2(knop, 10, category2);
 
             if (click(knop[3]))
             {
                 pageSpravka = 1;
-                knop[3].text = "назад";
+                knop[3].text = "Г­Г Г§Г Г¤";
                 txSleep(200);
             }
 
         }
 
-        if ( pageSpravka == 1 )
+        if ( pageSpravka == SPRAVKA )
         {
             txSetFillColor(TX_WHITE);
             txClear();
@@ -279,18 +224,18 @@ int main()
             txSetColor(TX_BLUE);
             txRectangle(100,100,825,525);
             txDrawText ( 300, 100 , 800 , 450 ,
-                "Данная программа позволяет сделать машину\n"
-                " из различных деталей ,\n"
+                "Г„Г Г­Г­Г Гї ГЇГ°Г®ГЈГ°Г Г¬Г¬Г  ГЇГ®Г§ГўГ®Г«ГїГҐГІ Г±Г¤ГҐГ«Г ГІГј Г¬Г ГёГЁГ­Гі\n"
+                " ГЁГ§ Г°Г Г§Г«ГЁГ·Г­Г»Гµ Г¤ГҐГІГ Г«ГҐГ© ,\n"
                 " \n"
-                " Авторы: Великий Марсель и просто Дима\n"
+                " ГЂГўГІГ®Г°Г»: Г‚ГҐГ«ГЁГЄГЁГ© ГЊГ Г°Г±ГҐГ«Гј ГЁ ГЇГ°Г®Г±ГІГ® Г„ГЁГ¬Г \n"
                 " \n"
-                " Найдете косяк - пинайте Диму\n"
-                " Хотите поблагодарить - вот номер карты Марселя\n"
+                " ГЌГ Г©Г¤ГҐГІГҐ ГЄГ®Г±ГїГЄ - ГЇГЁГ­Г Г©ГІГҐ Г„ГЁГ¬Гі\n"
+                " Г•Г®ГІГЁГІГҐ ГЇГ®ГЎГ«Г ГЈГ®Г¤Г Г°ГЁГІГј - ГўГ®ГІ Г­Г®Г¬ГҐГ° ГЄГ Г°ГІГ» ГЊГ Г°Г±ГҐГ«Гї\n"
                 " 4276 6900 1234 5678\n");
-            if (click(knop[4]))
+            if (click(knop[3]))
             {
                 pageSpravka = 0;
-                knop[3].text = "Справка";
+                knop[3].text = "Г‘ГЇГ°Г ГўГЄГ ";
                 txSleep(200);
             }
         }
