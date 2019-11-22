@@ -22,12 +22,12 @@ int get_widht  (string adress)
 
 struct MapObject
 {
+    string adress;
+    string category;
     int x;
     int y;
     int shirina;
     int visota;
-    string adress;
-    string category;
     HDC image;
     bool visible;
     int scr_width;

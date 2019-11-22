@@ -11,11 +11,12 @@ using namespace std;
 const int SPRAVKA = 1;
 const int REDACTOR = 0;
 
-int readPics(wchar_t* result, string adress, int COUNT_PICS, MapObject pic[])
+void readPics()
 {
     WIN32_FIND_DATAW wfd;
 	setlocale(LC_ALL, "");
-    HANDLE const hFind = FindFirstFileW(result, &wfd);
+	
+    HANDLE hFind = FindFirstFileW(adress + "*", &wfd);
     if (INVALID_HANDLE_VALUE != hFind)
     {
         do
@@ -24,15 +25,13 @@ int readPics(wchar_t* result, string adress, int COUNT_PICS, MapObject pic[])
             string str(ws.begin(), ws.end());
             if (str != "." && str != "..")
             {
-                pic[COUNT_PICS] = {adress + str};
+                pic[COUNT_PICS] = {"Pics\\Porogi\\" + str};
                 COUNT_PICS = COUNT_PICS + 1;
             }
         } while (NULL != FindNextFileW(hFind, &wfd));
 
         FindClose(hFind);
     }
-
-    return COUNT_PICS;
 }
 
 int main()
@@ -56,19 +55,70 @@ int main()
     string category;
     string category2;
     int pageSpravka = 0;
-    int COUNT_PICS = 0;
+    int COUNT_PICS = 20;
 
     MapObject pic[1000];
+    //pic[0] = {"Pics\\Car\\Car1.bmp"};
+    pic[0] = {"Pics\\Car\\Car1.bmp"};
+    pic[1] = {"Pics\\Car\\Car2.bmp"};
+    pic[2] = {"Pics\\Car\\Car3.bmp"};
+    pic[3] = {"Pics\\Car\\Car4.bmp"};
+    pic[4] = {"Pics\\Car\\Car5.bmp"};
+    pic[5] = {"Pics\\Car\\Car6.bmp"};
 
-    //Ã‡ÒÂÎ¸ ‚ÒÂ ÒÚ‡ÎÓ ÔÓ˘Â,Ã¿–—≈À‹ ƒ¿¡¿¬‹  ¿–“»Õ ».
-    COUNT_PICS = readPics(L"Pics\\Car\\*"       ,"Pics\\Car\\"       , COUNT_PICS, pic);
-    COUNT_PICS = readPics(L"Pics\\Spoler\\*"    ,"Pics\\Spoler\\"    , COUNT_PICS, pic);
-    COUNT_PICS = readPics(L"Pics\\Porogi\\*"    ,"Pics\\Porogi\\"    , COUNT_PICS, pic);
-    COUNT_PICS = readPics(L"Pics\\WheelRight\\*","Pics\\WheelRight\\", COUNT_PICS, pic);
-    COUNT_PICS = readPics(L"Pics\\WheelLeft\\*" ,"Pics\\WheelLeft\\" , COUNT_PICS, pic);
-  //COUNT_PICS = readPics(L"Pics\\WheelLeft\\*" ,"Pics\\WheelLeft\\" , COUNT_PICS, pic);
+    pic[6] = {"Pics\\WheelLeft\\Wheel2.bmp"};
+    pic[7] = {"Pics\\WheelRight\\Wheel2.bmp"};
+    pic[8] = {"Pics\\WheelLeft\\Wheel3.bmp"};
+    pic[9] = {"Pics\\WheelRight\\Wheel3.bmp"};
+    pic[10]= {"Pics\\WheelLeft\\Wheel1.bmp"};
+    pic[11]= {"Pics\\WheelRight\\Wheel1.bmp"};
+    pic[12]= {"Pics\\WheelLeft\\Wheel4.bmp"};
+    pic[13]= {"Pics\\WheelRight\\Wheel4.bmp"};
+    pic[14]= {"Pics\\WheelLeft\\Wheel5.bmp"};
+    pic[15]= {"Pics\\WheelRight\\Wheel5.bmp"};
+    pic[16]= {"Pics\\Spoler\\Spoler.bmp"};
+    pic[17]= {"Pics\\Spoler\\Spoler2.bmp"};
+    pic[18]= {"Pics\\Spoler\\Spoler3.bmp"};
+    pic[19]= {"Pics\\Spoler\\Spoler4.bmp"};
 
-    int yCar = 30;
+    WIN32_FIND_DATAW wfd;
+	setlocale(LC_ALL, "");
+	
+    HANDLE hFind = FindFirstFileW(L"Pics\\Porogi\\*", &wfd);
+    if (INVALID_HANDLE_VALUE != hFind)
+    {
+        do
+        {
+            wstring ws(&wfd.cFileName[0]);
+            string str(ws.begin(), ws.end());
+            if (str != "." && str != "..")
+            {
+                pic[COUNT_PICS] = {"Pics\\Porogi\\" + str};
+                COUNT_PICS = COUNT_PICS + 1;
+            }
+        } while (NULL != FindNextFileW(hFind, &wfd));
+
+        FindClose(hFind);
+    }
+    
+    hFind = FindFirstFileW(L"Pics\\Spoler\\*", &wfd);
+    if (INVALID_HANDLE_VALUE != hFind)
+    {
+        do
+        {
+            wstring ws(&wfd.cFileName[0]);
+            string str(ws.begin(), ws.end());
+            if (str != "." && str != "..")
+            {
+                pic[COUNT_PICS] = {"Pics\\Porogi\\" + str};
+                COUNT_PICS = COUNT_PICS + 1;
+            }
+        } while (NULL != FindNextFileW(hFind, &wfd));
+
+        FindClose(hFind);
+    }
+
+    int yCar = 80;
     int yWheelLeft = 80;
     int yWheelRight= 80;
     int ySpoler = 80;
@@ -174,7 +224,6 @@ int main()
             mapParts[i].shirina = 63;
             mapParts[i].visota = 63;
         }
-
         if (pic[i].category == "WheelRight")
         {
             mapParts[i].x = 560;
@@ -188,6 +237,7 @@ int main()
     string stroka_x;
     string stroka_y;
     string stroka_adress;
+    string stroka_category;
     ifstream file ("1.txt");
 
     while (file.good())
@@ -195,15 +245,17 @@ int main()
         getline(file, stroka_x);
         getline(file, stroka_y);
         getline(file, stroka_adress);
+        getline(file, stroka_category);
         getline(file, stroka);
 
         for (int i = 0; i < COUNT_PICS; i++)
         {
-            if (stroka_adress == mapParts[i].adress)
+            if (stroka_adress == mapParts[i].adress &&
+                stroka_category == mapParts[i].category)
             {
                 mapParts[i].x = atoi(stroka_x.c_str());
                 mapParts[i].y = atoi(stroka_y.c_str());
-                mapParts[i].visible = true;
+                mapParts[i].visible = false;
             }
         }
     }
