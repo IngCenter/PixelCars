@@ -1,24 +1,9 @@
 #include "TXLib.h"
-
-int get_height  (string adress)
-{
-  unsigned char info[54];
-  FILE*f = fopen (adress.c_str() , "r");
-  fread (info, sizeof (unsigned char), 54, f);
-  int height =* (int*) &info[22];
-
-  return height;
-}
-
-int get_widht  (string adress)
-{
-  unsigned char info[54];
-  FILE*f = fopen (adress.c_str() , "r");
-  fread (info, sizeof (unsigned char), 54, f);
-  int widht =* (int*) &info[18];
-
-  return widht;
-}
+#include <fstream>
+#include <iostream>
+#include <windows.h>
+#include <string.h>
+using namespace std;
 
 struct MapObject
 {
@@ -89,5 +74,26 @@ void RisovanieVsehCortinok(MapObject mapParts[], MapObject pic[], int COUNT_PICS
         }
 }
 
+int readPics(wchar_t* result, string adress, int COUNT_PICS, MapObject pic[])
+{
+    WIN32_FIND_DATAW wfd;
+	setlocale(LC_ALL, "");
+    HANDLE const hFind = FindFirstFileW(result, &wfd);
+    if (INVALID_HANDLE_VALUE != hFind)
+    {
+        do
+        {
+            wstring ws(&wfd.cFileName[0]);
+            string str(ws.begin(), ws.end());
+            if (str != "." && str != "..")
+            {
+                pic[COUNT_PICS] = {adress + str};
+                COUNT_PICS = COUNT_PICS + 1;
+            }
+        } while (NULL != FindNextFileW(hFind, &wfd));
 
+        FindClose(hFind);
+    }
 
+    return COUNT_PICS;
+}

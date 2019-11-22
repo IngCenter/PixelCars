@@ -9,3 +9,11 @@ Pics\WheelLeft\Wheel2.bmp
 210
 383
 Pics\Car\Car1.bmp
+
+653
+358
+Pics\Spoler\Spoler4.bmp
+
+364
+491
+Pics\Porogi\Porog2.bmp

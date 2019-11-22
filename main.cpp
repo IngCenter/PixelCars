@@ -3,42 +3,17 @@
 #include "Files.cpp"
 #include "MapObject.cpp"
 #include <fstream>
-#include <iostream>
-#include <windows.h>
 #include <string.h>
 using namespace std;
 
 const int SPRAVKA = 1;
 const int REDACTOR = 0;
 
-int readPics(wchar_t* result, string adress, int COUNT_PICS, MapObject pic[])
-{
-    WIN32_FIND_DATAW wfd;
-	setlocale(LC_ALL, "");
-    HANDLE const hFind = FindFirstFileW(result, &wfd);
-    if (INVALID_HANDLE_VALUE != hFind)
-    {
-        do
-        {
-            wstring ws(&wfd.cFileName[0]);
-            string str(ws.begin(), ws.end());
-            if (str != "." && str != "..")
-            {
-                pic[COUNT_PICS] = {adress + str};
-                COUNT_PICS = COUNT_PICS + 1;
-            }
-        } while (NULL != FindNextFileW(hFind, &wfd));
-
-        FindClose(hFind);
-    }
-
-    return COUNT_PICS;
-}
-
 int main()
 {
     txCreateWindow (1200, 600);
 
+    txPlaySound("erondondon.wav");
     txSelectFont ("Comic Sans MS", 20);
     Knopka knop[6];
     knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
@@ -60,12 +35,13 @@ int main()
 
     MapObject pic[1000];
 
-
+    //Марсель все стало проще,МАРСЕЛЬ ДАБАВЬ КАРТИНКИ.
     COUNT_PICS = readPics(L"Pics\\Car\\*"       ,"Pics\\Car\\"       , COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\Spoler\\*"    ,"Pics\\Spoler\\"    , COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\Porogi\\*"    ,"Pics\\Porogi\\"    , COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\WheelRight\\*","Pics\\WheelRight\\", COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\WheelLeft\\*" ,"Pics\\WheelLeft\\" , COUNT_PICS, pic);
+  //COUNT_PICS = readPics(L"Pics\\WheelLeft\\*" ,"Pics\\WheelLeft\\" , COUNT_PICS, pic);
 
     int yCar = 30;
     int yWheelLeft = 80;
@@ -173,6 +149,7 @@ int main()
             mapParts[i].shirina = 63;
             mapParts[i].visota = 63;
         }
+
         if (pic[i].category == "WheelRight")
         {
             mapParts[i].x = 560;
