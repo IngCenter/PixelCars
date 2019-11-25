@@ -23,6 +23,7 @@ int get_widht  (string adress)
     return widht;
 }
 
+
 string selectFile(HWND hWnd)
 {
 	const int SIZE = 100;
@@ -38,13 +39,12 @@ string selectFile(HWND hWnd)
 	ofn.lpstrFileTitle = NULL;
 	ofn.lpstrInitialDir = NULL;
 	ofn.Flags = OFN_CREATEPROMPT;
-    ofn.lpstrFilter = "Text\0*.TXT\0";
 
 	GetOpenFileNameA(&ofn);
 	return nameFile;
 }
 
-string selectFile2(HWND hWnd)
+string selectFile(HWND hWnd)
 {
 	const int SIZE = 100;
 	char nameFile[SIZE];
@@ -59,9 +59,8 @@ string selectFile2(HWND hWnd)
 	ofn.lpstrFileTitle = NULL;
 	ofn.lpstrInitialDir = NULL;
 	ofn.Flags = OFN_CREATEPROMPT;
-    ofn.lpstrFilter = "Text\0*.TXT\0";
 
-	GetSaveFileNameA(&ofn);
+	GetOpenFileNameA(&ofn);
 	return nameFile;
 }
 
