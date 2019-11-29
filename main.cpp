@@ -17,17 +17,17 @@ int main()
 
     txPlaySound("erondondon.wav");
     txSelectFont ("Comic Sans MS", 20);
-    Knopka knop[7];
+    Knopka knop[6];
     knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
     knop[1] = {100, 10, "Колеса", "WheelLeft" , "WheelRight" };
     knop[2] = {200, 0, "Спойлер", "Spoler" , "Spoler" };
-    knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
+    //knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
     //knop[4] = {400,0,  "Выхлоп", "Vihlop" , "Vihlop" };
     //knop[5] = {500,10, "Тонировка", "Tonirovka" , "Tonirovka" };
     //knop[6] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
-    knop[4] = {700,10, "Справка", "Krilia P." , "Krilia P." };
-    knop[5] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
-    knop[6] = {900,10, "Пороги", "Porogi" , "Porogi" };
+    knop[3] = {700,10, "Справка", "Krilia P." , "Krilia P." };
+    knop[4] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
+    knop[5] = {900,10, "Пороги", "Porogi" , "Porogi" };
 
 
     string category;
@@ -43,14 +43,13 @@ int main()
     COUNT_PICS = readPics(L"Pics\\Porogi\\*"    ,"Pics\\Porogi\\"    , COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\WheelRight\\*","Pics\\WheelRight\\", COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\WheelLeft\\*" ,"Pics\\WheelLeft\\" , COUNT_PICS, pic);
-    COUNT_PICS = readPics(L"Pics\\Krisha\\*" ,"Pics\\Krisha\\" , COUNT_PICS, pic);
+  //COUNT_PICS = readPics(L"Pics\\WheelLeft\\*" ,"Pics\\WheelLeft\\" , COUNT_PICS, pic);
 
     int yCar = 30;
     int yWheelLeft = 80;
     int yWheelRight= 80;
     int ySpoler = 80;
     int yPorogi = 400;
-    int yKrisha = 90;
 
     for (int i = 0; i < COUNT_PICS; i++)
     {
@@ -81,17 +80,6 @@ int main()
             pic[i].shirina = 70;
             pic[i].visota = 70;
         }
-
-        if (pic[i].category == "Krisha")
-        {
-            pic[i].x = 1030;
-            pic[i].y = yKrisha;
-            yKrisha = yKrisha + 80;
-            pic[i].shirina = 90;
-            pic[i].visota = 70;
-        }
-
-
 
         if (pic[i].category == "WheelRight")
         {
@@ -146,14 +134,6 @@ int main()
             mapParts[i].y = 353;
             mapParts[i].shirina = 100;
             mapParts[i].visota = 100;
-        }
-
-        if (pic[i].category == "Krisha")
-        {
-            mapParts[i].x = 1030;
-            mapParts[i].y = 400;
-            mapParts[i].shirina = 90;
-            mapParts[i].visota = 70;
         }
 
         if (pic[i].category == "Porogi")
@@ -227,7 +207,7 @@ int main()
 
         if ( pageSpravka == REDACTOR )
         {
-            drawFon(7, knop);
+            drawFon(6, knop);
 
             RisovanieVsehCortinok(mapParts, pic, COUNT_PICS, category, category2);
 
@@ -272,13 +252,13 @@ int main()
             Dvizenie(mapParts, nomer_Pics);
 
             //Select a category
-            category  = selectCategory(knop, 7, category);
-            category2  = selectCategory2(knop, 7, category2);
+            category  = selectCategory(knop, 6, category);
+            category2  = selectCategory2(knop, 6, category2);
 
-            if (click(knop[4]))
+            if (click(knop[3]))
             {
                 pageSpravka = 1;
-                knop[4].text = "Назад";
+                knop[3].text = "Назад";
                 txSleep(200);
             }
 
@@ -290,7 +270,7 @@ int main()
             txClear();
             txSetColor(TX_BLUE);
 
-            drawButton(knop[4]);
+            drawButton(knop[3]);
 
             txSetFillColor(TX_LIGHTGRAY);
             txSetColor(TX_BLUE);
@@ -304,10 +284,10 @@ int main()
                 " Найдете косяк - пинайте Диму\n"
                 " Хотите поблагодарить - вот номер карты Марселя\n"
                 " 4276 6900 1234 5678\n");
-            if (click(knop[4]))
+            if (click(knop[3]))
             {
                 pageSpravka = 0;
-                knop[4].text = "Справка";
+                knop[3].text = "Справка";
                 txSleep(200);
             }
         }
