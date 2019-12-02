@@ -11,24 +11,26 @@ using namespace std;
 const int SPRAVKA = 1;
 const int REDACTOR = 0;
 
+const int Kolichestvo_knopok = 9;
+const int KNOPKA_SPRAVKA = 6;
+
 int main()
 {
     txCreateWindow (1200, 600);
 
     txPlaySound("erondondon.wav");
     txSelectFont ("Comic Sans MS", 20);
-    Knopka knop[7];
+    Knopka knop[10];
     knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
     knop[1] = {100, 10, "Колеса", "WheelLeft" , "WheelRight" };
     knop[2] = {200, 0, "Спойлер", "Spoler" , "Spoler" };
     knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
-    //knop[4] = {400,0,  "Выхлоп", "Vihlop" , "Vihlop" };
-    //knop[5] = {500,10, "Тонировка", "Tonirovka" , "Tonirovka" };
-    //knop[6] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
-    knop[4] = {700,10, "Справка", "Krilia P." , "Krilia P." };
-    knop[5] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
-    knop[6] = {900,10, "Пороги", "Porogi" , "Porogi" };
-
+    knop[4] = {400,0,  "Сохранить", "Sohranit" , "Sohranit" };
+    knop[5] = {500,10, "Загрузить", "Zagruzka" , "Zagruzka" };
+    knop[6] = {700,10, "Справка", "Krilia P." , "Krilia P." };
+    knop[7] = {800,0,  "Крылья З.", "Krilia S." , "Krilia S." };
+    knop[8] = {900,10, "Пороги", "Porogi" , "Porogi" };
+    //knop[9] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
 
     string category;
     string category2;
@@ -43,7 +45,8 @@ int main()
     COUNT_PICS = readPics(L"Pics\\Porogi\\*"    ,"Pics\\Porogi\\"    , COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\WheelRight\\*","Pics\\WheelRight\\", COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\WheelLeft\\*" ,"Pics\\WheelLeft\\" , COUNT_PICS, pic);
-    COUNT_PICS = readPics(L"Pics\\Krisha\\*" ,"Pics\\Krisha\\" , COUNT_PICS, pic);
+    COUNT_PICS = readPics(L"Pics\\Krisha\\*"    ,"Pics\\Krisha\\"    , COUNT_PICS, pic);
+    COUNT_PICS = readPics(L"Pics\\Sohranit\\*"  ,"Pics\\Sohranit\\"  , COUNT_PICS, pic);
 
     int yCar = 30;
     int yWheelLeft = 80;
@@ -150,10 +153,10 @@ int main()
 
         if (pic[i].category == "Krisha")
         {
-            mapParts[i].x = 1030;
-            mapParts[i].y = 400;
-            mapParts[i].shirina = 90;
-            mapParts[i].visota = 70;
+            mapParts[i].x = 330;
+            mapParts[i].y = 250;
+            mapParts[i].shirina = 280;
+            mapParts[i].visota = 180;
         }
 
         if (pic[i].category == "Porogi")
@@ -227,7 +230,7 @@ int main()
 
         if ( pageSpravka == REDACTOR )
         {
-            drawFon(7, knop);
+            drawFon(Kolichestvo_knopok, knop);
 
             RisovanieVsehCortinok(mapParts, pic, COUNT_PICS, category, category2);
 
@@ -272,16 +275,80 @@ int main()
             Dvizenie(mapParts, nomer_Pics);
 
             //Select a category
-            category  = selectCategory(knop, 7, category);
-            category2  = selectCategory2(knop, 7, category2);
+            category  = selectCategory(knop, Kolichestvo_knopok, category);
+            category2  = selectCategory2(knop, Kolichestvo_knopok, category2);
 
-            if (click(knop[4]))
+            if (click(knop[KNOPKA_SPRAVKA]))
             {
                 pageSpravka = 1;
-                knop[4].text = "Назад";
+                knop[KNOPKA_SPRAVKA].text = "Назад";
                 txSleep(200);
             }
 
+            if (click(knop[4]))
+            {
+                newNameFile = selectFile2(txWindow());
+                ofstream file1 (newNameFile);
+
+                for (int i = 0; i < COUNT_PICS; i++)
+                {
+                    if (mapParts[i].visible == true)
+                    {
+                        file1 << mapParts[i].x << endl;
+                        file1 << mapParts[i].y << endl;
+                        file1 << mapParts[i].adress << endl;
+                        file1 << mapParts[i].shirina << endl;
+                        file1 << mapParts[i].visota << endl;
+                        file1 << endl;
+                    }
+                }
+
+                file1.close();
+            }
+
+
+
+
+            if (click(knop[5]))
+            {
+                string stroka;
+                string stroka_x;
+                string stroka_y;
+                string stroka_w;
+                string stroka_h;
+                string stroka_adress;
+
+                string newNameFile = selectFile(txWindow());
+                ifstream file (newNameFile);
+
+                while (file.good())
+                {
+                    getline(file, stroka_x);
+                    if (stroka_x.size() > 1)
+                    {
+                        getline(file, stroka_y);
+                        getline(file, stroka_adress);
+                        getline(file, stroka_w);
+                        getline(file, stroka_h);
+                        getline(file, stroka);
+
+                        for (int i = 0; i < COUNT_PICS; i++)
+                        {
+                            if (stroka_adress == mapParts[i].adress)
+                            {
+                                mapParts[i].x = atoi(stroka_x.c_str());
+                                mapParts[i].y = atoi(stroka_y.c_str());
+                                mapParts[i].visible = true;
+                                mapParts[i].shirina = atoi(stroka_w.c_str());
+                                mapParts[i].visota = atoi(stroka_h.c_str());
+                            }
+                        }
+
+                    }
+                }
+
+                file.close();
+            }
         }
 
         if ( pageSpravka == SPRAVKA )
@@ -290,7 +357,7 @@ int main()
             txClear();
             txSetColor(TX_BLUE);
 
-            drawButton(knop[4]);
+            drawButton(knop[KNOPKA_SPRAVKA]);
 
             txSetFillColor(TX_LIGHTGRAY);
             txSetColor(TX_BLUE);
@@ -303,11 +370,15 @@ int main()
                 " \n"
                 " Найдете косяк - пинайте Диму\n"
                 " Хотите поблагодарить - вот номер карты Марселя\n"
-                " 4276 6900 1234 5678\n");
-            if (click(knop[4]))
+                " 4276 6900 1234 5678\n"
+                "\n"
+                " Чтобы передвинуть элемент машины нужно нажимать на стрелочки\n"
+                " Чтобы изенить размер колеса или машины, нажимать на Z и X\n");
+
+            if (click(knop[KNOPKA_SPRAVKA]))
             {
                 pageSpravka = 0;
-                knop[4].text = "Справка";
+                knop[KNOPKA_SPRAVKA].text = "Справка";
                 txSleep(200);
             }
         }
@@ -322,24 +393,6 @@ int main()
         txDeleteDC(pic[nomer].image);
         txDeleteDC(mapParts[nomer].image);
     }
-
-    newNameFile = selectFile2(txWindow());
-    ofstream file1 (newNameFile);
-
-    for (int i = 0; i < COUNT_PICS; i++)
-    {
-        if (mapParts[i].visible == true)
-        {
-            file1 << mapParts[i].x << endl;
-            file1 << mapParts[i].y << endl;
-            file1 << mapParts[i].adress << endl;
-            file1 << mapParts[i].shirina << endl;
-            file1 << mapParts[i].visota << endl;
-            file1 << endl;
-        }
-    }
-
-    file1.close();
 
     return 0;
 }
