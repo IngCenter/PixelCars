@@ -11,24 +11,26 @@ using namespace std;
 const int SPRAVKA = 1;
 const int REDACTOR = 0;
 
+const int Kolichestvo_knopok = 9;
+const int KNOPKA_SPRAVKA = 6;
+
 int main()
 {
     txCreateWindow (1200, 600);
 
     txPlaySound("erondondon.wav");
     txSelectFont ("Comic Sans MS", 20);
-    Knopka knop[6];
+    Knopka knop[10];
     knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
     knop[1] = {100, 10, "Колеса", "WheelLeft" , "WheelRight" };
     knop[2] = {200, 0, "Спойлер", "Spoler" , "Spoler" };
-    //knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
-    //knop[4] = {400,0,  "Выхлоп", "Vihlop" , "Vihlop" };
-    //knop[5] = {500,10, "Тонировка", "Tonirovka" , "Tonirovka" };
-    //knop[6] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
-    knop[3] = {700,10, "Справка", "Krilia P." , "Krilia P." };
-    knop[4] = {800,0, "Крылья З.", "Krilia S." , "Krilia S." };
-    knop[5] = {900,10, "Пороги", "Porogi" , "Porogi" };
-
+    knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
+    knop[4] = {400,0,  "Сохранить", "Sohranit" , "Sohranit" };
+    knop[5] = {500,10, "Загрузить", "Zagruzka" , "Zagruzka" };
+    knop[6] = {700,10, "Справка", "Krilia P." , "Krilia P." };
+    knop[7] = {800,0,  "Крылья З.", "Krilia S." , "Krilia S." };
+    knop[8] = {900,10, "Пороги", "Porogi" , "Porogi" };
+    //knop[9] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
 
     string category;
     string category2;
@@ -43,13 +45,22 @@ int main()
     COUNT_PICS = readPics(L"Pics\\Porogi\\*"    ,"Pics\\Porogi\\"    , COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\WheelRight\\*","Pics\\WheelRight\\", COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\WheelLeft\\*" ,"Pics\\WheelLeft\\" , COUNT_PICS, pic);
-  //COUNT_PICS = readPics(L"Pics\\WheelLeft\\*" ,"Pics\\WheelLeft\\" , COUNT_PICS, pic);
+    COUNT_PICS = readPics(L"Pics\\Krisha\\*"    ,"Pics\\Krisha\\"    , COUNT_PICS, pic);
+    COUNT_PICS = readPics(L"Pics\\Sohranit\\*"  ,"Pics\\Sohranit\\"  , COUNT_PICS, pic);
+
+    HDC fon1 = txLoadImage("fon/fon1.bmp");
+    HDC fon2 = txLoadImage("fon/fon2.bmp");
+    //HDC fon3 = txLoadImage("fon/fon1.bmp");
+    HDC fon4 = txLoadImage("fon/fon4.bmp");
+    HDC fon;
+
 
     int yCar = 30;
     int yWheelLeft = 80;
     int yWheelRight= 80;
     int ySpoler = 80;
     int yPorogi = 400;
+    int yKrisha = 90;
 
     for (int i = 0; i < COUNT_PICS; i++)
     {
@@ -62,52 +73,53 @@ int main()
         int pos1 = stroka.find("\\");
         int pos2 = stroka.find("\\", pos1 + 1);
         pic[i].category = stroka.substr(pos1 + 1, pos2 - pos1 - 1);
+}
 
-        if (pic[i].category == "Car")
-        {
-            pic[i].x = 1030;
-            pic[i].y = yCar;
-            yCar = yCar + 80;
-            pic[i].shirina = 140;
-            pic[i].visota = 70;
-        }
+    bool Gamestart = false;
 
-        if (pic[i].category == "WheelLeft")
-        {
-            pic[i].x = 1030;
-            pic[i].y = yWheelLeft;
-            yWheelLeft = yWheelLeft + 80;
-            pic[i].shirina = 70;
-            pic[i].visota = 70;
-        }
+    while (Gamestart == false)
+    {
+        txSelectFont("Arial", 80);
+        txTextOut(100,10, "Выбирай себе гараж");
 
-        if (pic[i].category == "WheelRight")
-        {
-            pic[i].x = 1110;
-            pic[i].y = yWheelRight;
-            yWheelRight = yWheelRight + 80;
-            pic[i].shirina = 70;
-            pic[i].visota = 70;
-        }
+        Win32::TransparentBlt (txDC(), 100, 100, 300, 200, fon1, 0, 0, 1600, 900, -1);
+        Win32::TransparentBlt (txDC(), 450, 100, 300, 200, fon2, 0, 0, 1440, 900, -1);
+      //Win32::TransparentBlt (txDC(), 100, 100, 300, 200, fon3, 0, 0, 1600, 900, -1);
+        Win32::TransparentBlt (txDC(), 800, 100, 300, 200, fon4, 0, 0, 1600,1000, -1);
 
-        if (pic[i].category == "Spoler")
-        {
-            pic[i].x = 1030;
-            pic[i].y = ySpoler;
-            ySpoler = ySpoler + 80;
-            pic[i].shirina = 70;
-            pic[i].visota = 70;
-        }
+        if (txMouseButtons() & 1)
+            {
+                Gamestart = true;
+                if (  txMouseX() > 100 &&
+                      txMouseX() < 100 + 300 &&
+                      txMouseY() > 100 &&
+                      txMouseY() < 100 + 200)
+            {
+                fon = fon1;
+            }
 
-        if (pic[i].category == "Porogi")
-        {
-            pic[i].x = 1030;
-            pic[i].y = yPorogi;
-            yPorogi = yPorogi + 50;
-            pic[i].shirina = 70;
-            pic[i].visota = 30;
-        }
+                if (  txMouseX() > 450 &&
+                      txMouseX() < 450 + 300 &&
+                      txMouseY() > 100 &&
+                      txMouseY() < 100 + 200)
+            {
+                fon = fon2;
+            }
+
+                if (  txMouseX() > 800 &&
+                      txMouseX() < 800 + 300 &&
+                      txMouseY() > 100 &&
+                      txMouseY() < 100 + 200)
+            {
+                fon = fon4;
+            }
+
+
+            }
+
+        txSleep(20);
     }
+
 
     MapObject mapParts[COUNT_PICS];
 
@@ -134,6 +146,14 @@ int main()
             mapParts[i].y = 353;
             mapParts[i].shirina = 100;
             mapParts[i].visota = 100;
+        }
+
+        if (pic[i].category == "Krisha")
+        {
+            mapParts[i].x = 330;
+            mapParts[i].y = 250;
+            mapParts[i].shirina = 280;
+            mapParts[i].visota = 180;
         }
 
         if (pic[i].category == "Porogi")
@@ -164,6 +184,8 @@ int main()
     string stroka;
     string stroka_x;
     string stroka_y;
+    string stroka_w;
+    string stroka_h;
     string stroka_adress;
 
     string newNameFile = selectFile(txWindow());
@@ -172,24 +194,30 @@ int main()
     while (file.good())
     {
         getline(file, stroka_x);
-        getline(file, stroka_y);
-        getline(file, stroka_adress);
-        getline(file, stroka);
-
-        for (int i = 0; i < COUNT_PICS; i++)
+        if (stroka_x.size() > 1)
         {
-            if (stroka_adress == mapParts[i].adress)
+            getline(file, stroka_y);
+            getline(file, stroka_adress);
+            getline(file, stroka_w);
+            getline(file, stroka_h);
+            getline(file, stroka);
+
+            for (int i = 0; i < COUNT_PICS; i++)
             {
-                mapParts[i].x = atoi(stroka_x.c_str());
-                mapParts[i].y = atoi(stroka_y.c_str());
-                mapParts[i].visible = true;
+                if (stroka_adress == mapParts[i].adress)
+                {
+                    mapParts[i].x = atoi(stroka_x.c_str());
+                    mapParts[i].y = atoi(stroka_y.c_str());
+                    mapParts[i].visible = true;
+                    mapParts[i].shirina = atoi(stroka_w.c_str());
+                    mapParts[i].visota = atoi(stroka_h.c_str());
+                }
             }
+
         }
     }
 
     file.close();
-
-
 
     int nomer_Pics = -5;
 
@@ -199,7 +227,7 @@ int main()
 
         if ( pageSpravka == REDACTOR )
         {
-            drawFon(6, knop);
+            drawFon(Kolichestvo_knopok, knop);
 
             RisovanieVsehCortinok(mapParts, pic, COUNT_PICS, category, category2);
 
@@ -244,16 +272,80 @@ int main()
             Dvizenie(mapParts, nomer_Pics);
 
             //Select a category
-            category  = selectCategory(knop, 6, category);
-            category2  = selectCategory2(knop, 6, category2);
+            category  = selectCategory(knop, Kolichestvo_knopok, category);
+            category2  = selectCategory2(knop, Kolichestvo_knopok, category2);
 
-            if (click(knop[3]))
+            if (click(knop[KNOPKA_SPRAVKA]))
             {
                 pageSpravka = 1;
-                knop[3].text = "Назад";
+                knop[KNOPKA_SPRAVKA].text = "Назад";
                 txSleep(200);
             }
 
+            if (click(knop[4]))
+            {
+                newNameFile = selectFile2(txWindow());
+                ofstream file1 (newNameFile);
+
+                for (int i = 0; i < COUNT_PICS; i++)
+                {
+                    if (mapParts[i].visible == true)
+                    {
+                        file1 << mapParts[i].x << endl;
+                        file1 << mapParts[i].y << endl;
+                        file1 << mapParts[i].adress << endl;
+                        file1 << mapParts[i].shirina << endl;
+                        file1 << mapParts[i].visota << endl;
+                        file1 << endl;
+                    }
+                }
+
+                file1.close();
+            }
+
+
+
+
+            if (click(knop[5]))
+            {
+                string stroka;
+                string stroka_x;
+                string stroka_y;
+                string stroka_w;
+                string stroka_h;
+                string stroka_adress;
+
+                string newNameFile = selectFile(txWindow());
+                ifstream file (newNameFile);
+
+                while (file.good())
+                {
+                    getline(file, stroka_x);
+                    if (stroka_x.size() > 1)
+                    {
+                        getline(file, stroka_y);
+                        getline(file, stroka_adress);
+                        getline(file, stroka_w);
+                        getline(file, stroka_h);
+                        getline(file, stroka);
+
+                        for (int i = 0; i < COUNT_PICS; i++)
+                        {
+                            if (stroka_adress == mapParts[i].adress)
+                            {
+                                mapParts[i].x = atoi(stroka_x.c_str());
+                                mapParts[i].y = atoi(stroka_y.c_str());
+                                mapParts[i].visible = true;
+                                mapParts[i].shirina = atoi(stroka_w.c_str());
+                                mapParts[i].visota = atoi(stroka_h.c_str());
+                            }
+                        }
+
+                    }
+                }
+
+                file.close();
+            }
         }
 
         if ( pageSpravka == SPRAVKA )
@@ -262,7 +354,7 @@ int main()
             txClear();
             txSetColor(TX_BLUE);
 
-            drawButton(knop[3]);
+            drawButton(knop[KNOPKA_SPRAVKA]);
 
             txSetFillColor(TX_LIGHTGRAY);
             txSetColor(TX_BLUE);
@@ -275,11 +367,15 @@ int main()
                 " \n"
                 " Найдете косяк - пинайте Диму\n"
                 " Хотите поблагодарить - вот номер карты Марселя\n"
-                " 4276 6900 1234 5678\n");
-            if (click(knop[3]))
+                " 4276 6900 1234 5678\n"
+                "\n"
+                " Чтобы передвинуть элемент машины нужно нажимать на стрелочки\n"
+                " Чтобы изенить размер колеса или машины, нажимать на Z и X\n");
+
+            if (click(knop[KNOPKA_SPRAVKA]))
             {
                 pageSpravka = 0;
-                knop[3].text = "Справка";
+                knop[KNOPKA_SPRAVKA].text = "Справка";
                 txSleep(200);
             }
         }
@@ -294,18 +390,6 @@ int main()
         txDeleteDC(pic[nomer].image);
         txDeleteDC(mapParts[nomer].image);
     }
-
-
-    ofstream file1 ("2.txt");
-
-    for (int i = 0; i < COUNT_PICS; i++)
-    {
-        file1 << mapParts[i].x << endl;
-        mapParts[i].y = atoi(stroka_y.c_str());
-            //mapParts[i].visible = true;
-    }
-
-    file1.close();
 
     return 0;
 }

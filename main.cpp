@@ -48,6 +48,13 @@ int main()
     COUNT_PICS = readPics(L"Pics\\Krisha\\*"    ,"Pics\\Krisha\\"    , COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\Sohranit\\*"  ,"Pics\\Sohranit\\"  , COUNT_PICS, pic);
 
+    HDC fon1 = txLoadImage("fon/fon1.bmp");
+    HDC fon2 = txLoadImage("fon/fon2.bmp");
+    HDC fon3 = txLoadImage("fon/fon3.bmp");
+    HDC fon4 = txLoadImage("fon/fon4.bmp");
+    HDC fon;
+
+
     int yCar = 30;
     int yWheelLeft = 80;
     int yWheelRight= 80;
@@ -123,6 +130,51 @@ int main()
             pic[i].visota = 30;
         }
     }
+
+    bool Gamestart = false;
+
+    while (Gamestart == false)
+    {
+        txSelectFont("Arial", 80);
+        txTextOut(100,10, "Выбирай себе гараж");
+
+        Win32::TransparentBlt (txDC(), 100, 100, 300, 200, fon1, 0, 0, 1440, 900, -1);
+        Win32::TransparentBlt (txDC(), 450, 100, 300, 200, fon2, 0, 0, 1440, 900, -1);
+        Win32::TransparentBlt (txDC(), 800, 100, 300, 200, fon4, 0, 0, 1440, 900, -1);
+
+        if (txMouseButtons() & 1)
+            {
+                Gamestart = true;
+                if (  txMouseX() > 100 &&
+                      txMouseX() < 100 + 300 &&
+                      txMouseY() > 100 &&
+                      txMouseY() < 100 + 200)
+            {
+                fon = fon1;
+            }
+
+                if (  txMouseX() > 450 &&
+                      txMouseX() < 450 + 300 &&
+                      txMouseY() > 100 &&
+                      txMouseY() < 100 + 200)
+            {
+                fon = fon2;
+            }
+
+                if (  txMouseX() > 800 &&
+                      txMouseX() < 800 + 300 &&
+                      txMouseY() > 100 &&
+                      txMouseY() < 100 + 200)
+            {
+                fon = fon4;
+            }
+
+
+            }
+
+        txSleep(20);
+    }
+
 
     MapObject mapParts[COUNT_PICS];
 
@@ -230,7 +282,11 @@ int main()
 
         if ( pageSpravka == REDACTOR )
         {
+            txSelectFont("Arial", 15);
+
             drawFon(Kolichestvo_knopok, knop);
+
+            Win32::TransparentBlt (txDC(), 100, 100, 725, 425, fon, 0, 0, 1440, 900, -1);
 
             RisovanieVsehCortinok(mapParts, pic, COUNT_PICS, category, category2);
 
