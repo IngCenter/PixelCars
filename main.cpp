@@ -285,6 +285,12 @@ int main()
                 txSleep(200);
             }
 
+            if (GetAsyncKeyState(VK_SNAPSHOT))
+            {
+                ScreenCapture(100,100,700,430, "1.bmp", txWindow());
+                txMessageBox("Сохранено в 1.bmp");
+            }
+
             if (click(knop[4]))
             {
                 newNameFile = selectFile2(txWindow());
