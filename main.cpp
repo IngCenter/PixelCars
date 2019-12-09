@@ -11,7 +11,7 @@ using namespace std;
 const int SPRAVKA = 1;
 const int REDACTOR = 0;
 
-const int Kolichestvo_knopok = 9;
+const int Kolichestvo_knopok = 8;
 const int KNOPKA_SPRAVKA = 6;
 
 int main()
@@ -22,15 +22,13 @@ int main()
     txSelectFont ("Comic Sans MS", 20);
     Knopka knop[10];
     knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
-    knop[1] = {100, 10, "Колеса", "WheelLeft" , "WheelRight" };
-    knop[2] = {200, 0, "Спойлер", "Spoler" , "Spoler" };
-    knop[3] = {300,10, "Крыша", "Krisha" , "Krisha" };
-    knop[4] = {400,0,  "Сохранить", "Sohranit" , "Sohranit" };
-    knop[5] = {500,10, "Загрузить", "Zagruzka" , "Zagruzka" };
-    knop[6] = {700,10, "Справка", "Krilia P." , "Krilia P." };
-    knop[7] = {800,0,  "Крылья З.", "Krilia S." , "Krilia S." };
-    knop[8] = {900,10, "Пороги", "Porogi" , "Porogi" };
-    //knop[9] = {600,0,  "Двигатель", "Dvigatel" , "Dvigatel" };
+    knop[1] = {130, 10, "Колеса", "WheelLeft" , "WheelRight" };
+    knop[2] = {260, 0, "Спойлер", "Spoler" , "Spoler" };
+    knop[3] = {390,10, "Крыша", "Krisha" , "Krisha" };
+    knop[4] = {520,0,  "Сохранить", "Sohranit" , "Sohranit" };
+    knop[5] = {650,10, "Загрузить", "Zagruzka" , "Zagruzka" };
+    knop[6] = {780,10, "Справка", "Krilia P." , "Krilia P." };
+    knop[7] = {910,10, "Пороги", "Porogi" , "Porogi" };
 
     string category;
     string category2;
@@ -330,7 +328,7 @@ int main()
 
             Dvizenie(mapParts, nomer_Pics);
 
-            //Select a category
+            //Выбор категории
             category  = selectCategory(knop, Kolichestvo_knopok, category);
             category2  = selectCategory2(knop, Kolichestvo_knopok, category2);
 
