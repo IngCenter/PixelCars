@@ -14,12 +14,16 @@ const int REDACTOR = 0;
 const int Kolichestvo_knopok = 8;
 const int KNOPKA_SPRAVKA = 6;
 
+
+const int SOHRANIT = 4;
+const int ZAGRUZIT = 5;
+
 int main()
 {
     txCreateWindow (1200, 600);
 
     txPlaySound("erondondon.wav");
-    txSelectFont ("Comic Sans MS", 20);
+    txSelectFont ("Comic Sans MS", 50);
     Knopka knop[10];
     knop[0] = {0, 0,   "Кузов", "Car" , "Car"};
     knop[1] = {130, 10, "Колеса", "WheelLeft" , "WheelRight" };
@@ -234,43 +238,6 @@ int main()
         }
     }
 
-    string stroka;
-    string stroka_x;
-    string stroka_y;
-    string stroka_w;
-    string stroka_h;
-    string stroka_adress;
-
-    string newNameFile = selectFile(txWindow());
-    ifstream file (newNameFile);
-
-    while (file.good())
-    {
-        getline(file, stroka_x);
-        if (stroka_x.size() > 1)
-        {
-            getline(file, stroka_y);
-            getline(file, stroka_adress);
-            getline(file, stroka_w);
-            getline(file, stroka_h);
-            getline(file, stroka);
-
-            for (int i = 0; i < COUNT_PICS; i++)
-            {
-                if (stroka_adress == mapParts[i].adress)
-                {
-                    mapParts[i].x = atoi(stroka_x.c_str());
-                    mapParts[i].y = atoi(stroka_y.c_str());
-                    mapParts[i].visible = true;
-                    mapParts[i].shirina = atoi(stroka_w.c_str());
-                    mapParts[i].visota = atoi(stroka_h.c_str());
-                }
-            }
-
-        }
-    }
-
-    file.close();
 
     int nomer_Pics = -5;
 
@@ -280,7 +247,7 @@ int main()
 
         if ( pageSpravka == REDACTOR )
         {
-            txSelectFont("Arial", 15);
+            txSelectFont("Arial", 17);
 
             drawFon(Kolichestvo_knopok, knop);
 
@@ -345,9 +312,9 @@ int main()
                 txMessageBox("Сохранено в 1.bmp");
             }
 
-            if (click(knop[4]))
+            if (click(knop[SOHRANIT]))
             {
-                newNameFile = selectFile2(txWindow());
+                string newNameFile = selectFile2(txWindow());
                 ofstream file1 (newNameFile);
 
                 for (int i = 0; i < COUNT_PICS; i++)
@@ -369,7 +336,7 @@ int main()
 
 
 
-            if (click(knop[5]))
+            if (click(knop[ZAGRUZIT]))
             {
                 string stroka;
                 string stroka_x;
@@ -448,6 +415,9 @@ int main()
 
     }
 
+    txDeleteDC(fon1);
+    txDeleteDC(fon2);
+    txDeleteDC(fon3);
     for (int nomer = 0; nomer < COUNT_PICS; nomer++)
     {
         txDeleteDC(pic[nomer].image);

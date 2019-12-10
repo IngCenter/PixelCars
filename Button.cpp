@@ -11,6 +11,7 @@ struct Knopka
 
 void drawButton(Knopka knop)
 {
+    txSelectFont("Arial", 25);
     txSetFillColor(TX_LIGHTGRAY);
     txRectangle(knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50);
     txDrawText (knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50, knop.text);
