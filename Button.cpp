@@ -1,14 +1,26 @@
+/*!
+\file
+\brief Кнопка
+*/
+
 #include "TXLib.h"
 
+///Кнопка
 struct Knopka
 {
+     ///Левая граница кнопки
      int x;
+     ///Верхняя граница кнопки
      int y;
+     ///Текст
      const char* text;
+     ///Категория
      string category;
+     ///Дополнительная категория (для левых и правых колес)
      string category2;
 };
 
+///Рисование кнопки
 void drawButton(Knopka knop)
 {
     txSelectFont("Arial", 25);
@@ -17,6 +29,7 @@ void drawButton(Knopka knop)
     txDrawText (knop.x + 10,knop.y + 10,knop.x + 100,knop.y + 50, knop.text);
 }
 
+///Клик на кнопку
 bool click (Knopka knop)
 {
     if(txMouseButtons() == 1 &&
@@ -31,6 +44,7 @@ bool click (Knopka knop)
     return false;
 }
 
+///Категория при клике на кнопку
 string selectCategory(Knopka knop[], int count_btn, string category)
 {
     for (int nomer = 0; nomer < count_btn; nomer = nomer + 1)
@@ -44,6 +58,7 @@ string selectCategory(Knopka knop[], int count_btn, string category)
     return category;
 }
 
+///Категория при клике на кнопку
 string selectCategory2(Knopka knop[], int count_btn, string category2)
 {
 
@@ -58,6 +73,7 @@ string selectCategory2(Knopka knop[], int count_btn, string category2)
     return category2;
 }
 
+///Рисование фона и кнопок меню
 void drawFon(int count_btn, Knopka knop[])
 {
     txSetFillColor(TX_WHITE);

@@ -1,8 +1,14 @@
+/*!
+\file
+\brief Файлы
+*/
+
 #include "TXLib.h"
 #include <Windows.h>
 #include <string>
 using namespace std;
 
+///Ширина bmp-файла
 int get_height  (string adress)
 {
     unsigned char info[54];
@@ -13,6 +19,7 @@ int get_height  (string adress)
     return height;
 }
 
+///Высота bmp-файла
 int get_widht  (string adress)
 {
     unsigned char info[54];
@@ -23,6 +30,7 @@ int get_widht  (string adress)
     return widht;
 }
 
+///Выбор файла для загрузки
 string selectFile(HWND hWnd)
 {
 	const int SIZE = 100;
@@ -44,6 +52,7 @@ string selectFile(HWND hWnd)
 	return nameFile;
 }
 
+///Выбор файла для сохранения
 string selectFile2(HWND hWnd)
 {
 	const int SIZE = 100;
@@ -65,11 +74,13 @@ string selectFile2(HWND hWnd)
 	return nameFile;
 }
 
+///Для скриншота
 inline int GetFilePointer(HANDLE FileHandle)
 {
     return SetFilePointer(FileHandle, 0, 0, FILE_CURRENT);
 }
 
+///Сохранение файла в BMP
 bool SaveBMPFile(char *filename, HBITMAP bitmap, HDC bitmapDC, int width, int height)
 {
     bool Success=0;
@@ -151,6 +162,7 @@ bool SaveBMPFile(char *filename, HBITMAP bitmap, HDC bitmapDC, int width, int he
     return 1;
 }
 
+///Сам скриншот
 bool ScreenCapture(int x, int y, int width, int height, char *filename, HWND hwnd)
 {
     HDC hDC= GetDC(hwnd);

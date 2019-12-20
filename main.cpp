@@ -1,3 +1,8 @@
+/*!
+\file
+\brief Главная
+*/
+
 #include "TXLib.h"
 #include "Button.cpp"
 #include "Files.cpp"
@@ -8,16 +13,22 @@
 #include <Windows.h>
 using namespace std;
 
+///Страница справки
 const int SPRAVKA = 1;
+///Страница редактора
 const int REDACTOR = 0;
 
+///Количество кнопок
 const int Kolichestvo_knopok = 8;
+
+///Номер кнопки справки
 const int KNOPKA_SPRAVKA = 6;
-
-
+///Номер кнопки сохранить
 const int SOHRANIT = 4;
+///Номер кнопки загрузить
 const int ZAGRUZIT = 5;
 
+///Главная функция
 int main()
 {
     txCreateWindow (1200, 600);
@@ -41,7 +52,7 @@ int main()
 
     MapObject pic[1000];
 
-    //Марсель все стало проще,МАРСЕЛЬ ДАБАВЬ КАРТИНКИ.
+    ///Читаем картинки из директории Pics
     COUNT_PICS = readPics(L"Pics\\Car\\*"       ,"Pics\\Car\\"       , COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\Spoler\\*"    ,"Pics\\Spoler\\"    , COUNT_PICS, pic);
     COUNT_PICS = readPics(L"Pics\\Porogi\\*"    ,"Pics\\Porogi\\"    , COUNT_PICS, pic);
@@ -133,8 +144,8 @@ int main()
         }
     }
 
+    ///Выбор фона
     bool Gamestart = false;
-
     while (Gamestart == false)
     {
         txSelectFont("Arial", 80);
